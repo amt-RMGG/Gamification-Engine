@@ -1,0 +1,68 @@
+openapi: '3.0.3'
+info:
+  version: '0.1.0'
+  title: Badges API
+  description: An API to demonstrate Swagger and Spring Boot
+security:
+  #  - bearerAuth: []
+  - apiKeyAuth: []
+paths:
+  /badges:
+    post:
+      description: create a badge
+      operationId: createBadge
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/Badge'
+      responses:
+        '201':
+          description: created
+    get:
+      description: get the list of all badges
+      operationId: getBadges
+      responses:
+        '200':
+          description: success
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Badge'
+  /badges/{id}:
+    get:
+      description: get one badge, by id
+      operationId: getBadge
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      responses:
+        '200':
+          description: success
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/Badge'
+components:
+  securitySchemes:
+    #    bearerAuth:            # arbitrary name for the security scheme
+    #      type: http
+    #      scheme: bearer       # warning: it HAS TO be a lowercase b for the swagger ui version used in springfox
+    #      bearerFormat: JWT    # optional, arbitrary value for documentation purposes
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-KEY
+  schemas:
+    Badge:
+      type: object
+      properties:
+        name:
+          type: string
+        experienceValue:
+          type: int

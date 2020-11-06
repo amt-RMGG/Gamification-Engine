@@ -1,11 +1,11 @@
 # TrainingREST
 
-# Build and run the Fruit microservice
+# Build and run the Badge microservice
 
 You can use maven to build and run the REST API implementation from the command line. After invoking the following maven goal, the Spring Boot server will be up and running, listening for connections on port 8080.
 
 ```
-cd fruits-impl/
+cd badges-impl/
 mvn spring-boot:run
 ```
 
@@ -16,13 +16,13 @@ You can then access:
 
 You can use curl to invoke the endpoints:
 
-* To retrieve the list of fruits previously created:
+* To retrieve the list of badges previously created:
 
 ```
-curl -X GET --header 'Accept: application/json' 'http://localhost:8080/fruits'
+curl -X GET --header 'Accept: application/json' 'http://localhost:8080/badges'
 ```
 
-* To create a new fruit (beware that in the live documentation, there are extra \ line separators in the JSON payload that cause issues in some shells)
+* To create a new badge (beware that in the live documentation, there are extra \ line separators in the JSON payload that cause issues in some shells)
 
 ```
 curl -X POST --header 'Content-Type: application/json' --header 'Accept: */*' -d '{
@@ -32,15 +32,15 @@ curl -X POST --header 'Content-Type: application/json' --header 'Accept: */*' -d
   "kind": "apple",
   "size": "small",
   "weight": "light"
-}' 'http://localhost:8080/fruits'
+}' 'http://localhost:8080/badges'
 ```
 
-# Test the Fruit microservice by running the executable specification
+# Test the Badge microservice by running the executable specification
 
 You can use the Cucumber project to validate the API implementation. Do this when the server is running.
 
 ```
-cd cd fruits-specs/
+cd cd badges-specs/
 mvn clean test
 ```
 You will see the test results in the console, but you can also open the file located in `./target/cucumber`
