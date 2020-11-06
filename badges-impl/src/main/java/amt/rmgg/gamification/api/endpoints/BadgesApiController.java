@@ -56,6 +56,7 @@ public class BadgesApiController implements BadgesApi {
     private BadgeEntity toBadgeEntity(Badge badge) {
         BadgeEntity entity = new BadgeEntity();
         entity.setName(badge.getName());
+        entity.setExperienceValue(badge.getExperienceValue());
         return entity;
     }
 

@@ -4,8 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.LocalDate;
-import java.time.OffsetDateTime;
+
 
 @Entity
 @Data
