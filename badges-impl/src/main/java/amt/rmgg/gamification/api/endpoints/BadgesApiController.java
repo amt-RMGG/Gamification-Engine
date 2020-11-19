@@ -1,7 +1,5 @@
 package amt.rmgg.gamification.api.endpoints;
 
-import amt.rmgg.gamification.entities.BadgeEntity;
-import amt.rmgg.gamification.repositories.BadgeRepository;
 import amt.rmgg.gamification.api.BadgesApi;
 import amt.rmgg.gamification.api.model.Badge;
 import io.swagger.annotations.ApiParam;

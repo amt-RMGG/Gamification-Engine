@@ -11,13 +11,13 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema mydb
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 ;
-USE `mydb` ;
+CREATE SCHEMA IF NOT EXISTS `amt_gamification` DEFAULT CHARACTER SET utf8 ;
+USE `amt_gamification` ;
 
 -- -----------------------------------------------------
 -- Table `mydb`.`application`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`application` (
+CREATE TABLE IF NOT EXISTS `amt_gamification`.`application` (
   `apikey` VARCHAR(36) NOT NULL,
   `name` VARCHAR(30) NOT NULL,
   `description` MEDIUMTEXT NULL,
@@ -28,19 +28,19 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `mydb`.`badges`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`badges` (
+CREATE TABLE IF NOT EXISTS `amt_gamification`.`badges` (
   `name` VARCHAR(20) NOT NULL,
   `experienceValue` INT NOT NULL,
   `application_apikey` VARCHAR(36) NOT NULL,
   PRIMARY KEY (`name`),
   CONSTRAINT `fk_badges_application`
     FOREIGN KEY (`application_apikey`)
-    REFERENCES `mydb`.`application` (`apikey`)
+    REFERENCES `amt_gamification`.`application` (`apikey`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_badges_application_idx` ON `mydb`.`badges` (`application_apikey` ASC) VISIBLE;
+CREATE INDEX `fk_badges_application_idx` ON `amt_gamification`.`badges` (`application_apikey` ASC) VISIBLE;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
