@@ -44,6 +44,7 @@ public class BasicSteps {
 
     @Given("I have a badge payload")
     public void i_have_a_badge_payload() throws Throwable {
+        /*
         badge = new amt.rmgg.gamification.api.dto.Badge()
           .kind("banana")
           .colour("yellow")
@@ -51,6 +52,7 @@ public class BasicSteps {
           .weight("light")
           .expirationDate(LocalDate.now())
           .expirationDateTime(OffsetDateTime.now());
+         */
     }
 
     @When("^I POST the badge payload to the /badges endpoint$")
