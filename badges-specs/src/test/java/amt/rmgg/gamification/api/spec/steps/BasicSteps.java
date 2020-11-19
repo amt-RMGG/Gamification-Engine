@@ -30,6 +30,8 @@ public class BasicSteps {
     private String lastReceivedLocationHeader;
     private Badge lastReceivedBadge;
 
+    private String apiKey;
+
     public BasicSteps(Environment environment) {
         this.environment = environment;
         this.api = environment.getApi();
@@ -114,4 +116,8 @@ public class BasicSteps {
         lastStatusCode = lastApiException.getCode();
     }
 
+    @Given("my application is register")
+    public void myApplicationIsRegister() {
+
+    }
 }

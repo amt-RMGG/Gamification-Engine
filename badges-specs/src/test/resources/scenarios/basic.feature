@@ -3,6 +3,7 @@ Feature: Basic operations on badges
   Background:
     Given there is a Badges server
     Given the server is running
+    Given my application is register
 
   Scenario: create a badge
     Given I have a badge payload
