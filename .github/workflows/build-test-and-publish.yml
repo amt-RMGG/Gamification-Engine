@@ -26,7 +26,7 @@ jobs:
             ${{ runner.os }}-maven-
 
       - name: Run maven tests
-        run: cd badges/impl &&
+        run: cd badges-impl &&
           mvn verify
 
       - name: Build and publish Docker image
