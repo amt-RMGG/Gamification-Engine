@@ -10,8 +10,6 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
-import java.time.LocalDate;
-import java.time.OffsetDateTime;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -42,17 +40,16 @@ public class BasicSteps {
         assertNotNull(api);
     }
 
+    @Given("the server is running")
+    public void the_server_is_running() throws Throwable {
+        assert(true);
+    }
+
     @Given("I have a badge payload")
     public void i_have_a_badge_payload() throws Throwable {
-        /*
         badge = new amt.rmgg.gamification.api.dto.Badge()
-          .kind("banana")
-          .colour("yellow")
-          .size("medium")
-          .weight("light")
-          .expirationDate(LocalDate.now())
-          .expirationDateTime(OffsetDateTime.now());
-         */
+                .name("Grosse tête")
+                .experienceValue(100);
     }
 
     @When("^I POST the badge payload to the /badges endpoint$")
