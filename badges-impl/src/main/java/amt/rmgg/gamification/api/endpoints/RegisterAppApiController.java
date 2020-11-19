@@ -2,6 +2,7 @@ package amt.rmgg.gamification.api.endpoints;
 
 import amt.rmgg.gamification.api.ApplicationsApi;
 import amt.rmgg.gamification.api.model.Application;
+import amt.rmgg.gamification.api.util.ApiKeyManager;
 import amt.rmgg.gamification.entities.ApplicationEntity;
 import amt.rmgg.gamification.repositories.AppRepository;
 import io.swagger.annotations.ApiParam;
@@ -24,9 +25,14 @@ public class RegisterAppApiController implements ApplicationsApi {
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Object> registerApp(@ApiParam("") @Valid @RequestBody(required = false) Application application)
     {
-        UUID uuid = null;//TODO : Generer l'uuid
-        String encodedUUID = null;//TODO : Hasher l'UUID
-        ApplicationEntity applicationEntity = null;//TODO : Create application entity
+        UUID uuid = UUID.randomUUID();
+        String encodedUUID = ApiKeyManager.hashKey(uuid.toString());
+        ApplicationEntity applicationEntity = new ApplicationEntity();
+
+        applicationEntity.setName(application.getName());
+        applicationEntity.setDescription(application.getDescription());
+        applicationEntity.setEncodedUUID(encodedUUID);
+        
         appRepository.save(applicationEntity);
 
         return ResponseEntity.ok(uuid);

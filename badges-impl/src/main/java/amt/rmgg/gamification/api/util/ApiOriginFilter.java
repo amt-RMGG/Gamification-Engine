@@ -32,12 +32,8 @@ public class ApiOriginFilter implements javax.servlet.Filter {
             System.out.println("No need to check API KEY");
         }else{
             String apiKey = httpRequest.getHeader("x-api-key");
-            try {
-                System.out.println("Hashed key : "  + ApiKeyManager.hashKey(apiKey));
-            }catch (Exception e){
-                System.out.println(e.getMessage()); //TODO gérer cette exception
-            }
-            if(!keyManager.isKeyValid(apiKey)){
+            String hashedApiKey = ApiKeyManager.hashKey(apiKey);
+            if(!keyManager.isKeyValid(hashedApiKey)){
                 res.sendError(403, "Key is not valid");
             }
         }
