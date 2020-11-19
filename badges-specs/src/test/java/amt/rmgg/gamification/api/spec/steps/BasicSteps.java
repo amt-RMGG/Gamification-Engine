@@ -40,6 +40,11 @@ public class BasicSteps {
         assertNotNull(api);
     }
 
+    @Given("the server is running")
+    public void the_server_is_running() throws Throwable {
+        assert(true);
+    }
+
     @Given("I have a badge payload")
     public void i_have_a_badge_payload() throws Throwable {
         badge = new amt.rmgg.gamification.api.dto.Badge()
