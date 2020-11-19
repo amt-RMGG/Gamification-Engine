@@ -1,0 +1,9 @@
+version: '3.7'
+services:
+  server_gamification:
+    image: amt/gamification
+    container_name: gamification_server
+    ports:
+      - "8080:8080"
+      - "8443:8443"
+

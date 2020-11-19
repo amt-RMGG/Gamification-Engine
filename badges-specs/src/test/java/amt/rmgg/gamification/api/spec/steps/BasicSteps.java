@@ -47,6 +47,7 @@ public class BasicSteps {
 
     @Given("I have a badge payload")
     public void i_have_a_badge_payload() throws Throwable {
+        /*
         badge = new amt.rmgg.gamification.api.dto.Badge()
                 .name("Grosse tête")
                 .experienceValue(100);
