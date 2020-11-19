@@ -48,7 +48,7 @@ paths:
             'application/json':
               schema:
                 $ref: '#/components/schemas/Badge'
-  /registerApp:
+  /applications:
     post:
       description: register your app to the gamification server
       operationId: registerApp
