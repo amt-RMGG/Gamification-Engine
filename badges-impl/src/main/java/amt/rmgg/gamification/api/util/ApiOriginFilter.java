@@ -15,9 +15,6 @@ import java.io.IOException;
 @Component
 public class ApiOriginFilter implements javax.servlet.Filter {
 
-    @Autowired
-    private ApiKeyManager keyManager;
-
     @Override
     public void doFilter(ServletRequest request, ServletResponse response,
             FilterChain chain) throws IOException, ServletException {
@@ -33,7 +30,7 @@ public class ApiOriginFilter implements javax.servlet.Filter {
         }else{
             String apiKey = httpRequest.getHeader("x-api-key");
             String hashedApiKey = ApiKeyManager.hashKey(apiKey);
-            if(!keyManager.isKeyValid(hashedApiKey)){
+            if(!ApiKeyManager.isKeyValid(hashedApiKey)){
                 res.sendError(403, "Key is not valid");
             }
         }

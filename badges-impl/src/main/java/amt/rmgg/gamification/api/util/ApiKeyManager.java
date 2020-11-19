@@ -4,18 +4,23 @@ import org.springframework.stereotype.Component;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 
-@Component
 public class ApiKeyManager {
     // TODO : Pour l'instant comme ça, après j'irai taper dans la DB
-    String keys[] = {"abc123", "s3cr3t", "myapiKey"};
+    static private ArrayList<String> keys = new ArrayList<>();
 
-    public boolean isKeyValid(String _key){
+    public static boolean isKeyValid(String _key){
         for (String key : keys){
             if(key.equals(_key))
                 return true;
         }
         return false;
+    }
+
+    // Temporaire!
+    public static void addKey(String _key){
+        keys.add(_key);
     }
 
     public static String hashKey(String _key){

@@ -1,10 +1,12 @@
 package amt.rmgg.gamification.api.endpoints;
 
 import amt.rmgg.gamification.api.ApplicationsApi;
+import amt.rmgg.gamification.api.model.ApiKey;
 import amt.rmgg.gamification.api.model.Application;
 import amt.rmgg.gamification.api.util.ApiKeyManager;
 import amt.rmgg.gamification.entities.ApplicationEntity;
 import amt.rmgg.gamification.repositories.AppRepository;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,13 +28,16 @@ public class RegisterAppApiController implements ApplicationsApi {
     public ResponseEntity<Object> registerApp(@ApiParam("") @Valid @RequestBody(required = false) Application application)
     {
         UUID uuid = UUID.randomUUID();
-        String encodedUUID = ApiKeyManager.hashKey(uuid.toString());
+        String hashedApiKey = ApiKeyManager.hashKey(uuid.toString());
         ApplicationEntity applicationEntity = new ApplicationEntity();
 
         applicationEntity.setName(application.getName());
         applicationEntity.setDescription(application.getDescription());
-        applicationEntity.setEncodedUUID(encodedUUID);
-        
+        applicationEntity.setApikey(hashedApiKey);
+
+        // Store the api key TEMPORAIRE pour la démo
+        ApiKeyManager.addKey(hashedApiKey);
+
         appRepository.save(applicationEntity);
 
         return ResponseEntity.ok(uuid);

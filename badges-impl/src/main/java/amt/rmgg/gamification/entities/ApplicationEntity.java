@@ -12,7 +12,7 @@ import javax.persistence.Id;
 public class ApplicationEntity {
 
     @Id
-    private String encodedUUID;
+    private String apikey;
 
     private String name;
     private String description;
