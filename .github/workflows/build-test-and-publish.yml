@@ -26,7 +26,8 @@ jobs:
             ${{ runner.os }}-maven-
 
       - name: Run maven tests
-        run: mvn verify
+        run: cd badges/impl &&
+          mvn verify
 
       - name: Build and publish Docker image
         run: echo ${{ secrets.PAT_RMGG_DEPLOY }} | docker login ghcr.io -u RMGG-deploy --password-stdin &&
