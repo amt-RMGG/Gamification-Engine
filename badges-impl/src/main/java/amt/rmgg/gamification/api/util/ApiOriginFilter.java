@@ -1,10 +1,13 @@
 package amt.rmgg.gamification.api.util;
 
-import java.io.IOException;
+import org.springframework.stereotype.Component;
+
 import javax.servlet.*;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
-public class ApiOriginFilter implements javax.servlet.Filter {
+@Component
+public class ApiOriginFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response,
             FilterChain chain) throws IOException, ServletException {

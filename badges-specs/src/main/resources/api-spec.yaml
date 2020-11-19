@@ -48,7 +48,7 @@ paths:
             'application/json':
               schema:
                 $ref: '#/components/schemas/Badge'
-  /registerApp:
+  /applications:
     post:
       description: register your app to the gamification server
       operationId: registerApp
@@ -63,7 +63,6 @@ paths:
           content:
             'application/json':
               schema:
-                type: object
                 $ref: '#components/schemas/ApiKey'
               
 components:
@@ -83,7 +82,7 @@ components:
         name:
           type: string
         experienceValue:
-          type: number
+          type: integer
     Application:
       type: object
       properties:
