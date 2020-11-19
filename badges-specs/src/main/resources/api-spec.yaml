@@ -63,7 +63,6 @@ paths:
           content:
             'application/json':
               schema:
-                type: object
                 $ref: '#components/schemas/ApiKey'
               
 components:
