@@ -3,6 +3,8 @@ package amt.rmgg.gamification.api.spec.steps;
 import amt.rmgg.gamification.ApiException;
 import amt.rmgg.gamification.ApiResponse;
 import amt.rmgg.gamification.api.DefaultApi;
+import amt.rmgg.gamification.api.dto.ApiKey;
+import amt.rmgg.gamification.api.dto.Application;
 import amt.rmgg.gamification.api.dto.Badge;
 import amt.rmgg.gamification.api.spec.helpers.Environment;
 import io.cucumber.java.en.And;
@@ -21,6 +23,8 @@ public class BasicSteps {
     private DefaultApi api;
 
     Badge badge;
+    private ApiKey apiKey;
+    private Application app;
 
     private ApiResponse lastApiResponse;
     private ApiException lastApiException;
@@ -30,7 +34,7 @@ public class BasicSteps {
     private String lastReceivedLocationHeader;
     private Badge lastReceivedBadge;
 
-    private String apiKey;
+
 
     public BasicSteps(Environment environment) {
         this.environment = environment;
@@ -118,6 +122,16 @@ public class BasicSteps {
 
     @Given("my application is register")
     public void myApplicationIsRegister() {
-
+        app = new Application()
+                .description("A great app!")
+                .name("TheSuperDuperApp");
+        try {
+            lastApiResponse = api.registerAppWithHttpInfo(app);
+        } catch (ApiException e) {
+            e.printStackTrace();
+            processApiException(e);
+        }
+        processApiResponse(lastApiResponse);
+        apiKey = (ApiKey)lastApiResponse.getData();
     }
 }
