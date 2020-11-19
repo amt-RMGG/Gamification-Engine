@@ -5,19 +5,19 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
 -- -----------------------------------------------------
--- Schema mydb
+-- Schema amt_gamification
 -- -----------------------------------------------------
 
 -- -----------------------------------------------------
--- Schema mydb
+-- Schema amt_gamification
 -- -----------------------------------------------------
 CREATE SCHEMA IF NOT EXISTS `amt_gamification` DEFAULT CHARACTER SET utf8 ;
 USE `amt_gamification` ;
 
 -- -----------------------------------------------------
--- Table `mydb`.`application`
+-- Table `amt_gamification`.`application`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `amt_gamification`.`application` (
+CREATE TABLE IF NOT EXISTS `amt_gamification`.`application`(
   `apikey` VARCHAR(36) NOT NULL,
   `name` VARCHAR(30) NOT NULL,
   `description` MEDIUMTEXT NULL,
@@ -26,13 +26,14 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`badges`
+-- Table `amt_gamification`.`badges`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `amt_gamification`.`badges` (
+CREATE TABLE IF NOT EXISTS `amt_gamification`.`badges`(
+  `id` INT NOT NULL,
   `name` VARCHAR(20) NOT NULL,
   `experienceValue` INT NOT NULL,
   `application_apikey` VARCHAR(36) NOT NULL,
-  PRIMARY KEY (`name`),
+  PRIMARY KEY (`id`),
   CONSTRAINT `fk_badges_application`
     FOREIGN KEY (`application_apikey`)
     REFERENCES `amt_gamification`.`application` (`apikey`)
