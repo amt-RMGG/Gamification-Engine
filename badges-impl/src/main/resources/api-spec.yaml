@@ -82,7 +82,7 @@ components:
         name:
           type: string
         experienceValue:
-          type: number
+          type: integer
     Application:
       type: object
       properties:
