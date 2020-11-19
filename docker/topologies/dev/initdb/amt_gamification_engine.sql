@@ -28,20 +28,20 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `amt_gamification`.`badges`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `amt_gamification`.`badges`(
+CREATE TABLE IF NOT EXISTS `amt_gamification`.`badge`(
   `id` INT NOT NULL,
   `name` VARCHAR(20) NOT NULL,
   `experienceValue` INT NOT NULL,
   `application_apikey` VARCHAR(36) NOT NULL,
   PRIMARY KEY (`id`),
-  CONSTRAINT `fk_badges_application`
+  CONSTRAINT `fk_badge_application`
     FOREIGN KEY (`application_apikey`)
     REFERENCES `amt_gamification`.`application` (`apikey`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_badges_application_idx` ON `amt_gamification`.`badges` (`application_apikey` ASC) VISIBLE;
+CREATE INDEX `fk_badge_application_idx` ON `amt_gamification`.`badge` (`application_apikey` ASC) VISIBLE;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
