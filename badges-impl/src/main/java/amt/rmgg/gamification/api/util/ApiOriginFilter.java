@@ -10,6 +10,7 @@ import javax.net.ssl.KeyManager;
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 @Component
 public class ApiOriginFilter implements javax.servlet.Filter {
