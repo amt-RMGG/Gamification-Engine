@@ -1,6 +1,6 @@
 package amt.rmgg.gamification.api.endpoints;
 
-import amt.rmgg.gamification.api.RegisterAppApi;
+import amt.rmgg.gamification.api.ApplicationsApi;
 import amt.rmgg.gamification.api.model.Application;
 import amt.rmgg.gamification.entities.ApplicationEntity;
 import amt.rmgg.gamification.repositories.AppRepository;
@@ -16,19 +16,19 @@ import javax.validation.Valid;
 import java.util.UUID;
 
 @Controller
-public class RegisterAppApiController implements RegisterAppApi {
+public class RegisterAppApiController implements ApplicationsApi {
 
     @Autowired
     AppRepository appRepository;
 
     @ResponseStatus(HttpStatus.OK)
-    ResponseEntity<Object> registerApp(@ApiParam("") @Valid @RequestBody(required = false) Application application)
+    public ResponseEntity<Object> registerApp(@ApiParam("") @Valid @RequestBody(required = false) Application application)
     {
         UUID uuid = null;//TODO : Generer l'uuid
         String encodedUUID = null;//TODO : Hasher l'UUID
         ApplicationEntity applicationEntity = null;//TODO : Create application entity
         appRepository.save(applicationEntity);
-        
+
         return ResponseEntity.ok(uuid);
     }
 }
