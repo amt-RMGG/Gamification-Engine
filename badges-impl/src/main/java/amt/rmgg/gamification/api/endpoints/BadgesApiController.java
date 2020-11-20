@@ -2,6 +2,7 @@ package amt.rmgg.gamification.api.endpoints;
 
 import amt.rmgg.gamification.entities.ApplicationEntity;
 import amt.rmgg.gamification.entities.BadgeEntity;
+import amt.rmgg.gamification.repositories.AppRepository;
 import amt.rmgg.gamification.repositories.BadgeRepository;
 import amt.rmgg.gamification.api.BadgesApi;
 import amt.rmgg.gamification.api.model.Badge;
@@ -9,10 +10,9 @@ import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.orm.jpa.SharedEntityManagerCreator;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -28,6 +28,7 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Controller
 public class BadgesApiController implements BadgesApi {
@@ -35,18 +36,22 @@ public class BadgesApiController implements BadgesApi {
     @Autowired
     BadgeRepository badgeRepository;
 
-    private ApplicationEntity applicationEntity = new ApplicationEntity();
+    @Autowired
+    AppRepository appRepository;
+
+
 
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Void> createBadge(@ApiParam(value = "", required = true) @Valid @RequestBody Badge badge) {
         BadgeEntity newBadgeEntity = toBadgeEntity(badge);
-        applicationEntity.setApikey("abc");
-        applicationEntity.setName("my name");
-        applicationEntity.setDescription("desc");
-        newBadgeEntity.setApplication(applicationEntity);
 
+        Optional<ApplicationEntity> applicationEntity = appRepository.findById(apiKey);
+        if(!applicationEntity.isPresent()){
+            return null;
+        }
+
+        newBadgeEntity.setApplication(applicationEntity.get());
         badgeRepository.save(newBadgeEntity);
-
 
         Long id = newBadgeEntity.getId();
 

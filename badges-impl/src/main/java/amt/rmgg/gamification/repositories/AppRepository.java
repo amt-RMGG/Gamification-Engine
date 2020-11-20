@@ -5,6 +5,5 @@ import amt.rmgg.gamification.entities.ApplicationEntity;
 import amt.rmgg.gamification.entities.BadgeEntity;
 import org.springframework.data.repository.CrudRepository;
 
-public interface AppRepository extends CrudRepository<ApplicationEntity, Long> {
-
+public interface AppRepository extends CrudRepository<ApplicationEntity, String> {
 }

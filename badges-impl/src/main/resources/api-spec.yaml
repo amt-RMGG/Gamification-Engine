@@ -16,6 +16,11 @@ paths:
           'application/json':
             schema:
               $ref: '#/components/schemas/Badge'
+      parameters:
+        - in : header
+          name: x-api-key
+          schema:
+            type: string
       responses:
         '201':
           description: created
