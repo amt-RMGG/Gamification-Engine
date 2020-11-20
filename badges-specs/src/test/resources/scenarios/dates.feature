@@ -2,6 +2,7 @@ Feature: Validation of date formats
 
   Background:
     Given there is a Badges server
+    Given my application is register
 
   Scenario: the expiration date and time are managed
     Given I have a badge payload

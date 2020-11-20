@@ -1,5 +1,6 @@
 package amt.rmgg.gamification.api.endpoints;
 
+import amt.rmgg.gamification.entities.ApplicationEntity;
 import amt.rmgg.gamification.entities.BadgeEntity;
 import amt.rmgg.gamification.repositories.BadgeRepository;
 import amt.rmgg.gamification.api.BadgesApi;
@@ -15,10 +16,18 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaDelete;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.CriteriaUpdate;
+import javax.persistence.metamodel.Metamodel;
+import javax.swing.text.html.parser.Entity;
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class BadgesApiController implements BadgesApi {
@@ -26,10 +35,19 @@ public class BadgesApiController implements BadgesApi {
     @Autowired
     BadgeRepository badgeRepository;
 
+    private ApplicationEntity applicationEntity = new ApplicationEntity();
+
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Void> createBadge(@ApiParam(value = "", required = true) @Valid @RequestBody Badge badge) {
         BadgeEntity newBadgeEntity = toBadgeEntity(badge);
+        applicationEntity.setApikey("abc");
+        applicationEntity.setName("my name");
+        applicationEntity.setDescription("desc");
+        newBadgeEntity.setApplication(applicationEntity);
+
         badgeRepository.save(newBadgeEntity);
+
+
         Long id = newBadgeEntity.getId();
 
         URI location = ServletUriComponentsBuilder

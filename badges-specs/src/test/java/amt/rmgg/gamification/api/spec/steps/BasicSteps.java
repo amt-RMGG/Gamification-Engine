@@ -60,7 +60,6 @@ public class BasicSteps {
     @When("^I POST the badge payload to the /badges endpoint$")
     public void i_POST_the_badge_payload_to_the_badges_endpoint() throws Throwable {
         try {
-
             lastApiResponse = api.createBadgeWithHttpInfo(badge);
             processApiResponse(lastApiResponse);
         } catch (ApiException e) {
@@ -131,7 +130,6 @@ public class BasicSteps {
             e.printStackTrace();
             processApiException(e);
         }
-        //processApiResponse(lastApiResponse);
         apiKey = (String) lastApiResponse.getData();
         api.getApiClient().addDefaultHeader("x-api-key", apiKey);
     }
