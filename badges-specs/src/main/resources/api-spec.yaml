@@ -63,8 +63,8 @@ paths:
           content:
             'application/json':
               schema:
-                $ref: '#components/schemas/ApiKey'
-              
+                $ref: '#/components/schemas/ApiKey'
+
 components:
   securitySchemes:
     #    bearerAuth:            # arbitrary name for the security scheme
@@ -86,7 +86,7 @@ components:
     Application:
       type: object
       properties:
-        name: 
+        name:
           type: string
         description:
           type: string

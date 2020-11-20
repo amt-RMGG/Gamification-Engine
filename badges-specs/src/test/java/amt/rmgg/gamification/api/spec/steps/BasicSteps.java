@@ -3,6 +3,7 @@ package amt.rmgg.gamification.api.spec.steps;
 import amt.rmgg.gamification.ApiException;
 import amt.rmgg.gamification.ApiResponse;
 import amt.rmgg.gamification.api.DefaultApi;
+import amt.rmgg.gamification.api.dto.ApiKey;
 import amt.rmgg.gamification.api.dto.Application;
 import amt.rmgg.gamification.api.dto.Badge;
 import amt.rmgg.gamification.api.spec.helpers.Environment;
@@ -22,7 +23,7 @@ public class BasicSteps {
     private DefaultApi api;
 
     Badge badge;
-    private String apiKey;
+    private ApiKey apiKey;
     private Application app;
 
     private ApiResponse lastApiResponse;
@@ -32,8 +33,6 @@ public class BasicSteps {
 
     private String lastReceivedLocationHeader;
     private Badge lastReceivedBadge;
-
-
 
     public BasicSteps(Environment environment) {
         this.environment = environment;
@@ -60,7 +59,6 @@ public class BasicSteps {
     @When("^I POST the badge payload to the /badges endpoint$")
     public void i_POST_the_badge_payload_to_the_badges_endpoint() throws Throwable {
         try {
-
             lastApiResponse = api.createBadgeWithHttpInfo(badge);
             processApiResponse(lastApiResponse);
         } catch (ApiException e) {
@@ -131,8 +129,7 @@ public class BasicSteps {
             e.printStackTrace();
             processApiException(e);
         }
-        //processApiResponse(lastApiResponse);
-        apiKey = (String) lastApiResponse.getData();
-        api.getApiClient().addDefaultHeader("x-api-key", apiKey);
+        apiKey = (ApiKey) lastApiResponse.getData();
+        api.getApiClient().addDefaultHeader("x-api-key", apiKey.getUuid());
     }
 }
