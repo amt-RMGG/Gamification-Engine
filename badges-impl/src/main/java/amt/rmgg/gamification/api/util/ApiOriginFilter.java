@@ -24,14 +24,16 @@ public class ApiOriginFilter implements javax.servlet.Filter {
         String requestTarget = httpRequest.getServletPath();
         String method = httpRequest.getMethod();
 
-        // Seul cas ou on a pas besoin de la clé API est lorsqu'on ajoute une nouvelle application
-        if(requestTarget.equals("/applications/") && method.equals("POST")){
-            System.out.println("No need to check API KEY");
-        }else{
-            String apiKey = httpRequest.getHeader("x-api-key");
-            String hashedApiKey = ApiKeyManager.hashKey(apiKey);
-            if(!ApiKeyManager.isKeyValid(hashedApiKey)){
-                res.sendError(403, "Key is not valid");
+        if(requestTarget.equals("/badges/") || requestTarget.equals("/application/")) {
+            // Seul cas ou on a pas besoin de la clé API est lorsqu'on ajoute une nouvelle application
+            if (requestTarget.equals("/applications/") && method.equals("POST")) {
+                System.out.println("No need to check API KEY");
+            } else {
+                String apiKey = httpRequest.getHeader("x-api-key");
+                String hashedApiKey = ApiKeyManager.hashKey(apiKey);
+                if (!ApiKeyManager.isKeyValid(hashedApiKey)) {
+                    res.sendError(403, "Key is not valid");
+                }
             }
         }
 
