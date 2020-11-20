@@ -6,7 +6,6 @@ import amt.rmgg.gamification.api.model.Application;
 import amt.rmgg.gamification.api.util.ApiKeyManager;
 import amt.rmgg.gamification.entities.ApplicationEntity;
 import amt.rmgg.gamification.repositories.AppRepository;
-import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,7 +24,7 @@ public class RegisterAppApiController implements ApplicationsApi {
     AppRepository appRepository;
 
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<Object> registerApp(@ApiParam("") @Valid @RequestBody(required = false) Application application)
+    public ResponseEntity<ApiKey> registerApp(@ApiParam("") @Valid @RequestBody(required = false) Application application)
     {
         UUID uuid = UUID.randomUUID();
         String hashedApiKey = ApiKeyManager.hashKey(uuid.toString());
@@ -40,6 +39,9 @@ public class RegisterAppApiController implements ApplicationsApi {
 
         appRepository.save(applicationEntity);
 
-        return ResponseEntity.ok(uuid);
+        ApiKey apiKey = new ApiKey();
+        apiKey.setUuid(uuid.toString());
+
+        return ResponseEntity.ok(apiKey);
     }
 }

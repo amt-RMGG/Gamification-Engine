@@ -22,6 +22,7 @@ import javax.persistence.criteria.CriteriaDelete;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.CriteriaUpdate;
 import javax.persistence.metamodel.Metamodel;
+import javax.servlet.http.HttpServletRequest;
 import javax.swing.text.html.parser.Entity;
 import javax.validation.Valid;
 import java.net.URI;
@@ -39,9 +40,11 @@ public class BadgesApiController implements BadgesApi {
     @Autowired
     AppRepository appRepository;
 
+    @Autowired
+    HttpServletRequest httpServletRequest;
 
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Void> createBadge(@ApiParam(value = "", required = true) @Valid @RequestBody Badge badge) {
+    public ResponseEntity<Void> createBadge(@ApiParam(value = "", required = true) @Valid @RequestBody Badge badge ) {
         BadgeEntity newBadgeEntity = toBadgeEntity(badge);
 
         /*Optional<ApplicationEntity> applicationEntity = appRepository.findById(apiKey);

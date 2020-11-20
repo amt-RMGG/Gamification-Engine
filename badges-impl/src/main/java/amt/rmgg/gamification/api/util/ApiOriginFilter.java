@@ -34,6 +34,7 @@ public class ApiOriginFilter implements javax.servlet.Filter {
                 if (!ApiKeyManager.isKeyValid(hashedApiKey)) {
                     res.sendError(403, "Key is not valid");
                 }
+                // res.setAttribute. ..
             }
         }
 
