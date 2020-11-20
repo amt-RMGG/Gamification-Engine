@@ -21,21 +21,21 @@ import java.util.UUID;
 public class RegisterAppApiController implements ApplicationsApi {
 
     @Autowired
-    AppRepository appRepository;
+    private ApiKeyManager apiKeyManager;
+
+    @Autowired
+    private AppRepository appRepository;
 
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<ApiKey> registerApp(@ApiParam("") @Valid @RequestBody(required = false) Application application)
     {
         UUID uuid = UUID.randomUUID();
-        String hashedApiKey = ApiKeyManager.hashKey(uuid.toString());
+        String hashedApiKey = apiKeyManager.hashKey(uuid.toString());
         ApplicationEntity applicationEntity = new ApplicationEntity();
 
         applicationEntity.setName(application.getName());
         applicationEntity.setDescription(application.getDescription());
         applicationEntity.setApikey(hashedApiKey);
-
-        // Store the api key TEMPORAIRE pour la démo
-        ApiKeyManager.addKey(hashedApiKey);
 
         appRepository.save(applicationEntity);
 

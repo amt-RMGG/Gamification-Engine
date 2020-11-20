@@ -34,8 +34,6 @@ public class BasicSteps {
     private String lastReceivedLocationHeader;
     private Badge lastReceivedBadge;
 
-
-
     public BasicSteps(Environment environment) {
         this.environment = environment;
         this.api = environment.getApi();
