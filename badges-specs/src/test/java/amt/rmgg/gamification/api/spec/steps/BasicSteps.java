@@ -87,11 +87,11 @@ public class BasicSteps {
     public void iReceiveAStatusCodeWithALocationHeader(int arg0) {
     }
 
-    @When("I send a GET to the URL in the location header")
-    public void iSendAGETToTheURLInTheLocationHeader() {
+    @When("I GET a badge with ID {int}")
+    public void iGETABadge(int badgeId) {
         Integer id = Integer.parseInt(lastReceivedLocationHeader.substring(lastReceivedLocationHeader.lastIndexOf('/') + 1));
         try {
-            lastApiResponse = api.getBadgeWithHttpInfo(id);
+            lastApiResponse = api.getBadgeWithHttpInfo(badgeId);
             processApiResponse(lastApiResponse);
             lastReceivedBadge = (Badge)lastApiResponse.getData();
         } catch (ApiException e) {
