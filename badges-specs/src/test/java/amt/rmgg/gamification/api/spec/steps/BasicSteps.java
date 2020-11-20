@@ -3,7 +3,6 @@ package amt.rmgg.gamification.api.spec.steps;
 import amt.rmgg.gamification.ApiException;
 import amt.rmgg.gamification.ApiResponse;
 import amt.rmgg.gamification.api.DefaultApi;
-import amt.rmgg.gamification.api.dto.ApiKey;
 import amt.rmgg.gamification.api.dto.Application;
 import amt.rmgg.gamification.api.dto.Badge;
 import amt.rmgg.gamification.api.spec.helpers.Environment;
@@ -134,5 +133,6 @@ public class BasicSteps {
         }
         //processApiResponse(lastApiResponse);
         apiKey = (String) lastApiResponse.getData();
+        api.getApiClient().addDefaultHeader("x-api-key", apiKey);
     }
 }
