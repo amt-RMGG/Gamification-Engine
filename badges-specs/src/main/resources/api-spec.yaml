@@ -64,6 +64,23 @@ paths:
             'application/json':
               schema:
                 $ref: '#/components/schemas/ApiKey'
+  /events:
+    post:
+      description: send an event to the gamification server
+      operationId: sendEvent
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/Event'
+      responses:
+        '201':
+          description: proceed
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/Badge'
+
 
 components:
   securitySchemes:
@@ -95,3 +112,10 @@ components:
       properties:
         uuid:
           type: string
+    Event:
+      type: object
+      properties:
+        name:
+          type: string
+        userid:
+          type: integer
