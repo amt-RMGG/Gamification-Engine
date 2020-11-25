@@ -1,4 +1,15 @@
-# TrainingREST
+# Gamification engine
+
+
+
+# Test the running application with Postman
+Since the application need a api-key everytime someone want to get / add badges, events, etc, we need to pass the api-key in the **headers**. <br/>
+To do that, you'll need to :
+- Register your app with a POST on /applications (with a JSON payload { name : "your_name" })
+- Get the api-key in the response body
+- Add the api-key in your nexts request headers (the field in the headers should be named : **x-api-key***)
+<br/>
+Example here : https://www.getpostman.com/collections/0b87de38afa92b43a3ba
 
 # Build and run the Badge microservice
 
