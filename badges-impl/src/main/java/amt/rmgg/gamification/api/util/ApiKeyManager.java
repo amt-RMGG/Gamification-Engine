@@ -1,29 +1,27 @@
 package amt.rmgg.gamification.api.util;
 
+import amt.rmgg.gamification.entities.ApplicationEntity;
+import amt.rmgg.gamification.repositories.AppRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Optional;
 
+@Component
 public class ApiKeyManager {
-    // TODO : Pour l'instant comme ça, après j'irai taper dans la DB
-    static private ArrayList<String> keys = new ArrayList<>();
 
-    public static boolean isKeyValid(String _key){
-        for (String key : keys){
-            if(key.equals(_key))
-                return true;
-        }
-        return false;
+    @Autowired
+    private AppRepository appRepository;
+
+    public boolean isKeyValid(String _key){
+        return getApplicationEntityFromApiKey(_key) != null;
     }
 
-    // Temporaire!
-    public static void addKey(String _key){
-        keys.add(_key);
-    }
-
-    public static String hashKey(String _key){
+    public String hashKey(String _key){
         MessageDigest messageDigest = null;
         try{
             messageDigest = MessageDigest.getInstance("SHA-256");
@@ -35,4 +33,14 @@ public class ApiKeyManager {
         String stringHash = new String(messageDigest.digest());
         return stringHash;
     }
+
+    public ApplicationEntity getApplicationEntityFromApiKey(String apiKey){
+        Optional<ApplicationEntity> applicationEntityOptional = appRepository.findById(hashKey(apiKey));
+        if(applicationEntityOptional.isPresent()) {
+            return applicationEntityOptional.get();
+        }else{
+            return null;
+        }
+    }
+
 }
