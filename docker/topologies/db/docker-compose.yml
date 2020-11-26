@@ -6,22 +6,10 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: amt_gamification
+      MYSQL_DATABASE: gamifi
       MYSQL_USER: gamification_user
       MYSQL_PASSWORD: gamification_secret
     ports:
       - "3308:3306"
-    expose:
-      - '3308'
     volumes:
       - ./initdb:/docker-entrypoint-initdb.d
-
-  server_gamification:
-    image: amt/gamification
-    container_name: gamification_server
-    depends_on:
-      - db_gamification
-    ports:
-      - "8080:8080"
-      - "8443:8443"
-
