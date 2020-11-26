@@ -36,7 +36,7 @@ public class BadgesApiController implements BadgesApi {
     HttpServletRequest httpServletRequest;
 
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Void> createBadge(@ApiParam(value = "", required = true) @Valid @RequestBody Badge badge ) {
+    public ResponseEntity<Badge> createBadge(@ApiParam(value = "", required = true) @Valid @RequestBody Badge badge ) {
 
         String apikey = httpServletRequest.getHeader("x-api-key");
         ApplicationEntity applicationEntity = apiKeyManager.getApplicationEntityFromApiKey(apikey);
@@ -51,13 +51,13 @@ public class BadgesApiController implements BadgesApi {
 
         badgeRepository.save(newBadgeEntity);
 
-        Long id = newBadgeEntity.getId();
+      /*  Long id = newBadgeEntity.getId();
 
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest().path("/{id}")
                 .buildAndExpand(newBadgeEntity.getId()).toUri();
-
-        return ResponseEntity.created(location).build();
+*/
+        return ResponseEntity.ok(toBadge(newBadgeEntity));
     }
 
     public ResponseEntity<List<Badge>> getBadges() {
