@@ -19,6 +19,10 @@ paths:
       responses:
         '201':
           description: created
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/Badge'
     get:
       description: get the list of all badges
       operationId: getBadges
