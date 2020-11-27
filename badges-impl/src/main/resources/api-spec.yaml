@@ -78,7 +78,7 @@ paths:
             schema:
               $ref: '#/components/schemas/Event'
       responses:
-        '201':
+        '200':
           description: proceed
           content:
             'application/json':
@@ -121,5 +121,9 @@ components:
       properties:
         name:
           type: string
+        description:
+          type: string
         userid:
           type: integer
+        rank:
+          type: string

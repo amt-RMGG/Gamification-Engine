@@ -68,7 +68,7 @@ public class BadgesApiController implements BadgesApi {
                 applicationEntity
                         .getBadges()
                         .stream()
-                        .map(this::toBadge)
+                        .map(BadgesApiController::toBadge)
                         .collect(Collectors.toList()));
     }
 
@@ -91,14 +91,14 @@ public class BadgesApiController implements BadgesApi {
         return ResponseEntity.ok(toBadge(badge));
     }
 
-    private BadgeEntity toBadgeEntity(Badge badge) {
+    public static BadgeEntity toBadgeEntity(Badge badge) {
         BadgeEntity entity = new BadgeEntity();
         entity.setName(badge.getName());
         entity.setExperienceValue(badge.getExperienceValue());
         return entity;
     }
 
-    private Badge toBadge(BadgeEntity entity) {
+    public static Badge toBadge(BadgeEntity entity) {
         Badge badge = new Badge();
         badge.setName(entity.getName());
         badge.setExperienceValue(entity.getExperienceValue());
