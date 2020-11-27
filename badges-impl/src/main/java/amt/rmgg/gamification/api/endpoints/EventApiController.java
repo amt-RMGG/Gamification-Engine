@@ -13,6 +13,7 @@ import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
@@ -20,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.InvalidObjectException;
 
+@Controller
 public class EventApiController implements EventsApi {
 
     @Autowired
@@ -34,8 +36,8 @@ public class EventApiController implements EventsApi {
     @Autowired
     EventProcessorService eventProcessorService;
 
-    @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<Badge> sendEvent(@ApiParam @Valid @RequestBody Event event)
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<Badge> sendEvent(@ApiParam(value = "", required = true) @Valid @RequestBody Event event)
     {
         String apikey = httpServletRequest.getHeader("x-api-key");
         ApplicationEntity applicationEntity = apiKeyManager.getApplicationEntityFromApiKey(apikey);
@@ -64,7 +66,7 @@ public class EventApiController implements EventsApi {
         EventEntity entity = new EventEntity();
         entity.setName(event.getName());
         entity.setDescription(event.getDescription());
-        entity.setRank(event.getRank());
+        entity.setBadgeRank(event.getBadgeRank());
         entity.setUserId(event.getUserid());
         return  entity;
     }

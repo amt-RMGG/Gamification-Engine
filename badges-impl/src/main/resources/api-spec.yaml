@@ -125,5 +125,5 @@ components:
           type: string
         userid:
           type: integer
-        rank:
+        badgeRank:
           type: string
