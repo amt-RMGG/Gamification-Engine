@@ -1,12 +1,8 @@
 package amt.rmgg.gamification.api.util;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Component;
 
-import java.io.IOException;
-import java.util.Enumeration;
-import javax.net.ssl.KeyManager;
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -28,13 +24,15 @@ public class ApiOriginFilter implements javax.servlet.Filter {
         String requestTarget = httpRequest.getServletPath();
         String method = httpRequest.getMethod();
 
-        if(requestTarget.equals("/badges/") || requestTarget.equals("/application/")) {
+        String[] endpoints = {"/badges/", "/application/", "/rules/", "events"}; //TODO use for verification below
+
+        if(requestTarget.equals("/badges/") || requestTarget.equals("/applications/") || requestTarget.equals("/rules/") || requestTarget.equals("/events/") ) {
             // Seul cas ou on a pas besoin de la clé API est lorsqu'on ajoute une nouvelle application
             if (requestTarget.equals("/applications/") && method.equals("POST")) {
                 System.out.println("No need to check API KEY");
             } else {
                 String apiKey = httpRequest.getHeader("x-api-key");
-                if (apiKey == "" || !apiKeyManager.isKeyValid(apiKey)) {
+                if (apiKey.equals("") || !apiKeyManager.isKeyValid(apiKey)) {
                     res.sendError(403, "Key is not valid");
                     return;
                 }

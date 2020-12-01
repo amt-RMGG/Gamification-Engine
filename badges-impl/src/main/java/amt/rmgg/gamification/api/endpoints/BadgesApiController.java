@@ -46,7 +46,14 @@ public class BadgesApiController implements BadgesApi {
             return ResponseEntity.notFound().build();
         }
 
-        BadgeEntity newBadgeEntity = toBadgeEntity(badge);
+        BadgeEntity newBadgeEntity;
+        try{
+            newBadgeEntity = toBadgeEntity(badge);
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResponseEntity.badRequest().build();
+        }
+
         applicationEntity.getBadges().add(newBadgeEntity);
 
         badgeRepository.save(newBadgeEntity);

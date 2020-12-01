@@ -14,14 +14,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Controller
 public class RulesApiController implements RulesApi {
@@ -64,6 +68,37 @@ public class RulesApiController implements RulesApi {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
+    }
+
+    public ResponseEntity<List<Rule>> getRules() {
+        String apikey = httpServletRequest.getHeader("x-api-key");
+        ApplicationEntity applicationEntity = apiKeyManager.getApplicationEntityFromApiKey(apikey);
+
+        return ResponseEntity.ok(
+                applicationEntity
+                        .getRules()
+                        .stream()
+                        .map(RulesApiController::toRule)
+                        .collect(Collectors.toList()));
+    }
+
+    @Override
+    public ResponseEntity<Rule> getRule(@ApiParam(value = "",required=true) @PathVariable("id") Integer id) {
+        String apikey = httpServletRequest.getHeader("x-api-key");
+        ApplicationEntity applicationEntity = apiKeyManager.getApplicationEntityFromApiKey(apikey);
+
+        List<RuleEntity> rules = applicationEntity
+                .getRules()
+                .stream()
+                .filter(r -> r.getId() == id)
+                .limit(1)
+                .collect(Collectors.toList());
+
+        if(rules.size() != 1){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        RuleEntity ruleEntity = rules.get(0);
+        return ResponseEntity.ok(toRule(ruleEntity));
     }
 
 
