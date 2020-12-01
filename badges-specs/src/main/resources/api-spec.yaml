@@ -87,7 +87,7 @@ paths:
   /rules:
     post:
       description: add a new rule for the application
-      operationId: addRule
+      operationId: createRule
       requestBody:
         content:
           'application/json':
@@ -95,7 +95,23 @@ paths:
               $ref: '#/components/schemas/Rule'
       responses:
         '201':
-          description: rule added
+          description: created
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/Rule'
+    get:
+      description: get the list of all rules
+      operationId: getRules
+      responses:
+        '200':
+          description: success
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Rule'
   /rules/{id}:
     get:
       description: get one rule, by id
