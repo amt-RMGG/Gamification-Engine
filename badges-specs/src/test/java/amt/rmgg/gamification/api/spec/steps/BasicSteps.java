@@ -87,7 +87,7 @@ public class BasicSteps {
 
     @When("I GET a badge with ID {int}")
     public void iGETABadge(int badgeId) {
-        Integer id = Integer.parseInt(lastReceivedLocationHeader.substring(lastReceivedLocationHeader.lastIndexOf('/') + 1));
+        //Integer id = Integer.parseInt(lastReceivedLocationHeader.substring(lastReceivedLocationHeader.lastIndexOf('/') + 1));
         try {
             lastApiResponse = api.getBadgeWithHttpInfo(badgeId);
             processApiResponse(lastApiResponse);

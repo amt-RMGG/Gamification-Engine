@@ -15,10 +15,10 @@ public class EventEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private String name;
+    private String eventName;
     private String description;
 
     private long UserId;
-    private String rank;
+    private String eventRank;
 
 }

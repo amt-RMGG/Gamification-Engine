@@ -131,13 +131,13 @@ components:
     Event:
       type: object
       properties:
-        name:
+        eventName:
           type: string
         description:
           type: string
         userid:
           type: integer
-        rank:
+        eventRank:
           type: string
     Rule:
       type: object
