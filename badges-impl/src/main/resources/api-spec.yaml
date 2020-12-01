@@ -84,6 +84,18 @@ paths:
             'application/json':
               schema:
                 $ref: '#/components/schemas/Badge'
+  /rules:
+    post:
+      description: add a new rule for the application
+      operationId: addRule
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/Badge'
+      responses:
+        '201':
+          description: rule added
 
 
 components:
@@ -127,3 +139,14 @@ components:
           type: integer
         rank:
           type: string
+    Rule:
+      type: object
+      properties:
+        eventType:
+          type: string
+        threshold:
+          type: integer
+        badgeId:
+          type: integer
+
+
