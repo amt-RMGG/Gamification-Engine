@@ -1,26 +1,26 @@
 package amt.rmgg.gamification.api.endpoints;
 
+import amt.rmgg.gamification.api.BadgesApi;
+import amt.rmgg.gamification.api.model.Badge;
 import amt.rmgg.gamification.api.util.ApiKeyManager;
 import amt.rmgg.gamification.entities.ApplicationEntity;
 import amt.rmgg.gamification.entities.BadgeEntity;
 import amt.rmgg.gamification.repositories.AppRepository;
 import amt.rmgg.gamification.repositories.BadgeRepository;
-import amt.rmgg.gamification.api.BadgesApi;
-import amt.rmgg.gamification.api.model.Badge;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.server.ResponseStatusException;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import javax.net.ssl.KeyManager;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.net.URI;
-import java.util.ArrayList;
+import java.net.URISyntaxException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -57,7 +57,12 @@ public class BadgesApiController implements BadgesApi {
                 .fromCurrentRequest().path("/{id}")
                 .buildAndExpand(newBadgeEntity.getId()).toUri();
 */
-        return ResponseEntity.ok(toBadge(newBadgeEntity));
+        try {
+            return ResponseEntity.created(new URI("/badges/" + newBadgeEntity.getId())).body(badge);
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
     }
 
     public ResponseEntity<List<Badge>> getBadges() {
