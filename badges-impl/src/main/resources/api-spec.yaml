@@ -92,10 +92,27 @@ paths:
         content:
           'application/json':
             schema:
-              $ref: '#/components/schemas/Badge'
+              $ref: '#/components/schemas/Rule'
       responses:
         '201':
           description: rule added
+  /rules/{id}:
+    get:
+      description: get one rule, by id
+      operationId: getRule
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      responses:
+        '200':
+          description: success
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/Rule'
 
 
 components:
@@ -131,7 +148,7 @@ components:
     Event:
       type: object
       properties:
-        eventName:
+        name:
           type: string
         description:
           type: string

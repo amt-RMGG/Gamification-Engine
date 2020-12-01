@@ -62,7 +62,7 @@ public class EventApiController implements EventsApi {
     private EventEntity toEventEntity(Event event)
     {
         EventEntity entity = new EventEntity();
-        entity.setEventName(event.getEventName());
+        entity.setEventName(event.getName());
         entity.setDescription(event.getDescription());
         entity.setEventRank(event.getEventRank());
         entity.setUserId(event.getUserid());

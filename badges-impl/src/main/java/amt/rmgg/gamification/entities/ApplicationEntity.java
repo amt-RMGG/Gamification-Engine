@@ -1,9 +1,10 @@
 package amt.rmgg.gamification.entities;
 
-import amt.rmgg.gamification.api.model.Badge;
 import lombok.Data;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import java.util.List;
 
 @Entity
@@ -18,4 +19,7 @@ public class ApplicationEntity {
 
     @OneToMany
     private List<BadgeEntity> badges;
+
+    @OneToMany
+    private List<RuleEntity> rules;
 }
