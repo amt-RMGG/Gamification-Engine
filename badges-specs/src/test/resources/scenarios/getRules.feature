@@ -6,6 +6,7 @@ Feature: Basic operations on rules
 
   Scenario: post a rule
     Given i have a rule payload
-    When I POST a rule payload to the /rules endpoint
+    When I POST the rule payload to the /rules endpoint
     Then I receive a 201 status code
+    Then I GET a rule with ID 1
     Then I receive a rule that is the same as the payload

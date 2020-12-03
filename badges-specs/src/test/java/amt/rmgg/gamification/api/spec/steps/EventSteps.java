@@ -21,7 +21,7 @@ public class EventSteps {
     }
 
     @When("^I POST the event payload to the /events endpoint$")
-    public void i_POST_the_event_payload_to_the_events_endpoint() throws Throwable {
+    public void i_POST_the_event_payload_to_the_events_endpoint() {
         try {
             StepsHelper.lastApiResponse = StepsHelper.api.sendEventWithHttpInfo(event);
             StepsHelper.processApiResponse(StepsHelper.lastApiResponse);
