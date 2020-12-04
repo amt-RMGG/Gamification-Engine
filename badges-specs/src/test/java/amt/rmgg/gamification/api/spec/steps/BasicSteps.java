@@ -51,4 +51,19 @@ public class BasicSteps {
         StepsHelper.apiKey = (ApiKey) StepsHelper.lastApiResponse.getData();
         StepsHelper.api.getApiClient().addDefaultHeader("x-api-key", StepsHelper.apiKey.getUuid());
     }
+
+    @Given("another application is register")
+    public void anotherApplicationIsRegister() {
+        StepsHelper.app = new Application()
+                .description("Another great app!")
+                .name("TheOtherSuperDuperApp");
+        try {
+            StepsHelper.lastApiResponse = StepsHelper.api.registerAppWithHttpInfo(StepsHelper.app);
+        } catch (ApiException e) {
+            e.printStackTrace();
+            StepsHelper.processApiException(e);
+        }
+        StepsHelper.apiKey = (ApiKey) StepsHelper.lastApiResponse.getData();
+        StepsHelper.api.getApiClient().addDefaultHeader("x-api-key", StepsHelper.apiKey.getUuid());
+    }
 }
