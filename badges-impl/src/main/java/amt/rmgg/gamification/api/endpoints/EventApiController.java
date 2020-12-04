@@ -8,7 +8,9 @@ import amt.rmgg.gamification.api.util.EventProcessorService;
 import amt.rmgg.gamification.entities.ApplicationEntity;
 import amt.rmgg.gamification.entities.BadgeEntity;
 import amt.rmgg.gamification.entities.EventEntity;
+import amt.rmgg.gamification.entities.EventTypeEntity;
 import amt.rmgg.gamification.repositories.EventRepository;
+import amt.rmgg.gamification.repositories.EventTypeRepository;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.InvalidObjectException;
+import java.util.Optional;
 
 public class EventApiController implements EventsApi {
 
@@ -34,6 +37,9 @@ public class EventApiController implements EventsApi {
     @Autowired
     EventProcessorService eventProcessorService;
 
+    @Autowired
+    EventTypeRepository eventTypeRepository;
+
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Badge> sendEvent(@ApiParam @Valid @RequestBody Event event)
     {
@@ -48,8 +54,13 @@ public class EventApiController implements EventsApi {
 
         try
         {
+            Optional<EventTypeEntity> eventTypeEntity = eventTypeRepository.findById(event.getEventTypeId());
+            if(eventTypeEntity.isEmpty()){
+                throw new InvalidObjectException("event type with id + " + event.getEventTypeId() + "not found");
+            }
+            EventEntity newEventEntity = toEventEntity(event, eventTypeEntity.get());
+
             BadgeEntity awardedBadge = eventProcessorService.process(event, apikey);
-            EventEntity newEventEntity = toEventEntity(event);
             eventRepository.save(newEventEntity);
             return ResponseEntity.ok(BadgesApiController.toBadge(awardedBadge));
         }
@@ -59,12 +70,11 @@ public class EventApiController implements EventsApi {
         }
     }
 
-    private EventEntity toEventEntity(Event event)
-    {
+    private EventEntity toEventEntity(Event event, EventTypeEntity eventType) {
         EventEntity entity = new EventEntity();
         entity.setEventName(event.getName());
         entity.setDescription(event.getDescription());
-        entity.setEventRank(event.getEventRank());
+        entity.setEventType(eventType);
         entity.setUserId(event.getUserid());
         return  entity;
     }

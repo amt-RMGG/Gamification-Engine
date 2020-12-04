@@ -145,6 +145,9 @@ components:
     Badge:
       type: object
       properties:
+        id:
+          type: integer
+          format: int64
         name:
           type: string
         experienceValue:
@@ -164,22 +167,40 @@ components:
     Event:
       type: object
       properties:
+        id:
+          type: integer
+          format: int64
         name:
           type: string
         description:
           type: string
         userid:
           type: integer
-        eventRank:
-          type: string
+        eventTypeId:
+          type: integer
+          format: int64
     Rule:
       type: object
       properties:
-        eventType:
-          type: string
+        id:
+          type: integer
+          format: int64
+        eventTypeId:
+          type: integer
+          format: int64
         threshold:
           type: integer
         badgeId:
+          type: integer
+    eventType:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        initialValue:
           type: integer
 
 

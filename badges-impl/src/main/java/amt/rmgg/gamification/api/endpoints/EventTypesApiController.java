@@ -1,6 +1,8 @@
 package amt.rmgg.gamification.api.endpoints;
 
+import amt.rmgg.gamification.api.EventTypesApi;
 import amt.rmgg.gamification.api.RulesApi;
+import amt.rmgg.gamification.api.model.EventType;
 import amt.rmgg.gamification.api.model.Rule;
 import amt.rmgg.gamification.api.util.ApiKeyManager;
 import amt.rmgg.gamification.entities.ApplicationEntity;
@@ -30,7 +32,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Controller
-public class RulesApiController implements RulesApi {
+public class EventTypesApiController implements EventTypesApi {
     @Autowired
     private ApiKeyManager apiKeyManager;
     @Autowired
@@ -38,18 +40,15 @@ public class RulesApiController implements RulesApi {
     @Autowired
     AppRepository appRepository;
     @Autowired
-    BadgeRepository badgeRepository;
-    @Autowired
     HttpServletRequest httpServletRequest;
     @Autowired
     EventTypeRepository eventTypeRepository;
 
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Rule> createRule(@ApiParam(value = "", required = true) @Valid @RequestBody Rule rule ) {
+    public ResponseEntity<EventType> createEventType(@ApiParam(value = "", required = true) @Valid @RequestBody EventType eventType ) {
 
         String apikey = httpServletRequest.getHeader("x-api-key");
         ApplicationEntity applicationEntity = apiKeyManager.getApplicationEntityFromApiKey(apikey);
-
 
         if(applicationEntity == null){
             return ResponseEntity.notFound().build();
@@ -86,7 +85,7 @@ public class RulesApiController implements RulesApi {
                 applicationEntity
                         .getRules()
                         .stream()
-                        .map(RulesApiController::toRule)
+                        .map(EventTypesApiController::toRule)
                         .collect(Collectors.toList()));
     }
 
@@ -110,8 +109,11 @@ public class RulesApiController implements RulesApi {
     }
 
 
-    public static RuleEntity toRuleEntity(Rule rule, BadgeEntity badge, EventTypeEntity eventType) {
-        RuleEntity entity = new RuleEntity();
+    public static EventTypeEntity toEventType(EventType eventType) {
+        EventTypeEntity entity = new EventTypeEntity();
+        eventTypeEntity.
+
+
         entity.setEventType(eventType);
         entity.setThreshold(rule.getThreshold());
         entity.setBadge(badge);

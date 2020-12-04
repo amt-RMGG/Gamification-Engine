@@ -51,10 +51,10 @@ public class EventProcessorService {
             applicationRules = ruleBook.get("default");
         }
 
-        BadgeEntity awardedBadge = applicationRules.rules.get(event.getEventRank());
+        BadgeEntity awardedBadge = applicationRules.rules.get(/*event.getEventRank()*/"Silver"); //TODO FIXME
         if(awardedBadge == null)
         {
-            throw new InvalidObjectException("Unknown event rank : "+event.getEventRank());
+            throw new InvalidObjectException("Unknown event rank : "/*+event.getEventRank()*/); //TODO FIXME
         }
 
         return awardedBadge;
