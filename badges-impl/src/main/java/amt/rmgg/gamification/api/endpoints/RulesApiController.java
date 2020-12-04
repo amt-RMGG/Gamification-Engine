@@ -1,12 +1,14 @@
 package amt.rmgg.gamification.api.endpoints;
 
-import amt.rmgg.gamification.api.BadgesApi;
-import amt.rmgg.gamification.api.model.Badge;
+import amt.rmgg.gamification.api.RulesApi;
+import amt.rmgg.gamification.api.model.Rule;
 import amt.rmgg.gamification.api.util.ApiKeyManager;
 import amt.rmgg.gamification.entities.ApplicationEntity;
 import amt.rmgg.gamification.entities.BadgeEntity;
+import amt.rmgg.gamification.entities.RuleEntity;
 import amt.rmgg.gamification.repositories.AppRepository;
 import amt.rmgg.gamification.repositories.BadgeRepository;
+import amt.rmgg.gamification.repositories.RuleRepository;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,21 +24,24 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Controller
-public class BadgesApiController implements BadgesApi {
+public class RulesApiController implements RulesApi {
     @Autowired
     private ApiKeyManager apiKeyManager;
     @Autowired
-    BadgeRepository badgeRepository;
+    RuleRepository ruleRepository;
     @Autowired
     AppRepository appRepository;
+    @Autowired
+    BadgeRepository badgeRepository;
     @Autowired
     HttpServletRequest httpServletRequest;
 
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Badge> createBadge(@ApiParam(value = "", required = true) @Valid @RequestBody Badge badge ) {
+    public ResponseEntity<Rule> createRule(@ApiParam(value = "", required = true) @Valid @RequestBody Rule rule ) {
 
         String apikey = httpServletRequest.getHeader("x-api-key");
         ApplicationEntity applicationEntity = apiKeyManager.getApplicationEntityFromApiKey(apikey);
@@ -46,75 +51,72 @@ public class BadgesApiController implements BadgesApi {
             return ResponseEntity.notFound().build();
         }
 
-        BadgeEntity newBadgeEntity;
-        try{
-            newBadgeEntity = toBadgeEntity(badge);
-        }catch (Exception e){
-            e.printStackTrace();
-            return ResponseEntity.badRequest().build();
+        Optional<BadgeEntity> badgeEntity = badgeRepository.findById((long)rule.getBadgeId());
+
+        if(badgeEntity.isEmpty()){
+            return ResponseEntity.notFound().build();
         }
 
-        applicationEntity.getBadges().add(newBadgeEntity);
+        RuleEntity newRuleEntity = toRuleEntity(rule, badgeEntity.get());
+        applicationEntity.getRules().add(newRuleEntity);
 
-        badgeRepository.save(newBadgeEntity);
+        ruleRepository.save(newRuleEntity);
 
-      /*  Long id = newBadgeEntity.getId();
-
-        URI location = ServletUriComponentsBuilder
-                .fromCurrentRequest().path("/{id}")
-                .buildAndExpand(newBadgeEntity.getId()).toUri();
-*/
         try {
-            return ResponseEntity.created(new URI("/badges/" + newBadgeEntity.getId())).body(badge);
+            return ResponseEntity.created(new URI("/rules/" + newRuleEntity.getId())).body(rule);
         } catch (URISyntaxException e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
 
-    public ResponseEntity<List<Badge>> getBadges() {
+    public ResponseEntity<List<Rule>> getRules() {
         String apikey = httpServletRequest.getHeader("x-api-key");
         ApplicationEntity applicationEntity = apiKeyManager.getApplicationEntityFromApiKey(apikey);
 
         return ResponseEntity.ok(
                 applicationEntity
-                        .getBadges()
+                        .getRules()
                         .stream()
-                        .map(BadgesApiController::toBadge)
+                        .map(RulesApiController::toRule)
                         .collect(Collectors.toList()));
     }
 
     @Override
-    public ResponseEntity<Badge> getBadge(@ApiParam(value = "",required=true) @PathVariable("id") Integer id) {
+    public ResponseEntity<Rule> getRule(@ApiParam(value = "",required=true) @PathVariable("id") Integer id) {
         String apikey = httpServletRequest.getHeader("x-api-key");
         ApplicationEntity applicationEntity = apiKeyManager.getApplicationEntityFromApiKey(apikey);
 
-        List<BadgeEntity> badges = applicationEntity
-                .getBadges()
+        List<RuleEntity> rules = applicationEntity
+                .getRules()
                 .stream()
-                .filter(b -> b.getId() == id)
+                .filter(r -> r.getId() == id)
                 .limit(1)
                 .collect(Collectors.toList());
 
-        if(badges.size() != 1){
+        if(rules.size() != 1){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
-        BadgeEntity badge = badges.get(0);
-        return ResponseEntity.ok(toBadge(badge));
+        RuleEntity ruleEntity = rules.get(0);
+        return ResponseEntity.ok(toRule(ruleEntity));
     }
 
-    public static BadgeEntity toBadgeEntity(Badge badge) {
-        BadgeEntity entity = new BadgeEntity();
-        entity.setName(badge.getName());
-        entity.setExperienceValue(badge.getExperienceValue());
+
+    public static RuleEntity toRuleEntity(Rule rule, BadgeEntity badge) {
+        RuleEntity entity = new RuleEntity();
+        entity.setType(rule.getEventType());
+        entity.setThreshold(rule.getThreshold());
+        entity.setBadge(badge);
         return entity;
     }
 
-    public static Badge toBadge(BadgeEntity entity) {
-        Badge badge = new Badge();
-        badge.setName(entity.getName());
-        badge.setExperienceValue(entity.getExperienceValue());
-        return badge;
+
+    public static Rule toRule(RuleEntity entity){
+        Rule rule = new Rule();
+        rule.setEventType(entity.getType());
+        rule.setThreshold(entity.getThreshold());
+        rule.setBadgeId((int) entity.getBadge().getId());
+        return rule;
     }
 
 }

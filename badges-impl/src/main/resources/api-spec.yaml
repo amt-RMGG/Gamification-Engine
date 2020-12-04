@@ -68,7 +68,69 @@ paths:
             'application/json':
               schema:
                 $ref: '#/components/schemas/ApiKey'
-              
+  /events:
+    post:
+      description: send an event to the gamification server
+      operationId: sendEvent
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/Event'
+      responses:
+        '200':
+          description: proceed
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/Badge'
+  /rules:
+    post:
+      description: add a new rule for the application
+      operationId: createRule
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/Rule'
+      responses:
+        '201':
+          description: created
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/Rule'
+    get:
+      description: get the list of all rules
+      operationId: getRules
+      responses:
+        '200':
+          description: success
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Rule'
+  /rules/{id}:
+    get:
+      description: get one rule, by id
+      operationId: getRule
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      responses:
+        '200':
+          description: success
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/Rule'
+
+
 components:
   securitySchemes:
     #    bearerAuth:            # arbitrary name for the security scheme
@@ -90,7 +152,7 @@ components:
     Application:
       type: object
       properties:
-        name: 
+        name:
           type: string
         description:
           type: string
@@ -99,3 +161,25 @@ components:
       properties:
         uuid:
           type: string
+    Event:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        userid:
+          type: integer
+        eventRank:
+          type: string
+    Rule:
+      type: object
+      properties:
+        eventType:
+          type: string
+        threshold:
+          type: integer
+        badgeId:
+          type: integer
+
+
