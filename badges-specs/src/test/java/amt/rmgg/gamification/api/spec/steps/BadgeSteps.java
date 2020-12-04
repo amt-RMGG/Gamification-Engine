@@ -70,12 +70,12 @@ public class BadgeSteps  {
     @Then("I receive badges of my application only")
     public void iReceiveBadgesOfMyApplicationOnly() {
         try {
-            lastApiResponse = api.getBadgesWithHttpInfo();
-            processApiResponse(lastApiResponse);
-            lastReceivedBadge = (Badge)lastApiResponse.getData();
+            StepsHelper.lastApiResponse = StepsHelper.api.getBadgesWithHttpInfo();
+            StepsHelper.processApiResponse(StepsHelper.lastApiResponse);
+            lastReceivedBadge = (Badge)StepsHelper.lastApiResponse.getData();
             assertEquals("Petit pied", lastReceivedBadge.getName());
         } catch (ApiException e) {
-            processApiException(e);
+            StepsHelper.processApiException(e);
         }
     }
 }
