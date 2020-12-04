@@ -80,10 +80,6 @@ paths:
       responses:
         '200':
           description: proceed
-          content:
-            'application/json':
-              schema:
-                $ref: '#/components/schemas/Badge'
   /rules:
     post:
       description: add a new rule for the application
@@ -212,13 +208,6 @@ components:
     Event:
       type: object
       properties:
-        id:
-          type: integer
-          format: int64
-        name:
-          type: string
-        description:
-          type: string
         userid:
           type: integer
         eventTypeId:

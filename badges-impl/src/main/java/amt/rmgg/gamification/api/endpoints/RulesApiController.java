@@ -7,7 +7,6 @@ import amt.rmgg.gamification.entities.ApplicationEntity;
 import amt.rmgg.gamification.entities.BadgeEntity;
 import amt.rmgg.gamification.entities.EventTypeEntity;
 import amt.rmgg.gamification.entities.RuleEntity;
-import amt.rmgg.gamification.repositories.AppRepository;
 import amt.rmgg.gamification.repositories.BadgeRepository;
 import amt.rmgg.gamification.repositories.EventTypeRepository;
 import amt.rmgg.gamification.repositories.RuleRepository;
@@ -35,8 +34,6 @@ public class RulesApiController implements RulesApi {
     private ApiKeyManager apiKeyManager;
     @Autowired
     RuleRepository ruleRepository;
-    @Autowired
-    AppRepository appRepository;
     @Autowired
     BadgeRepository badgeRepository;
     @Autowired
@@ -71,7 +68,7 @@ public class RulesApiController implements RulesApi {
         ruleRepository.save(newRuleEntity);
 
         try {
-            return ResponseEntity.created(new URI("/rules/" + newRuleEntity.getId())).body(rule);
+            return ResponseEntity.created(new URI("/rules/" + newRuleEntity.getId())).body(toRule(newRuleEntity));
         } catch (URISyntaxException e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
@@ -121,6 +118,7 @@ public class RulesApiController implements RulesApi {
 
     public static Rule toRule(RuleEntity entity){
         Rule rule = new Rule();
+        rule.setId(entity.getId());
         rule.setEventTypeId(entity.getEventType().getId());
         rule.setThreshold(entity.getThreshold());
         rule.setBadgeId((int) entity.getBadge().getId());
