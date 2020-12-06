@@ -14,13 +14,12 @@ public class RuleSteps {
 
     Rule rule;
     Rule lastReceivedRule;
-    EventType eventType;
 
     @Given("i have a rule payload")
     public void iHaveARulePayload() {
         rule = new amt.rmgg.gamification.api.dto.Rule()
                 .badgeId(1)
-                .eventTypeId(eventType.getId())
+                .eventTypeId(StepsHelper.eventType.getId())
                 .threshold(5);
     }
 
@@ -57,18 +56,6 @@ public class RuleSteps {
         try {
             StepsHelper.lastApiResponse = StepsHelper.api.getRuleWithHttpInfo(id);
             StepsHelper.processApiResponse(StepsHelper.lastApiResponse);
-        } catch (ApiException e) {
-            StepsHelper.processApiException(e);
-        }
-    }
-
-    @Given("I register a eventType")
-    public void iRegisterAEventType() {
-        try {
-            EventType payload = new EventType().name("upvote");
-            StepsHelper.lastApiResponse = StepsHelper.api.createEventTypeWithHttpInfo(payload);
-            StepsHelper.processApiResponse(StepsHelper.lastApiResponse);
-            eventType = (EventType) StepsHelper.lastApiResponse.getData();
         } catch (ApiException e) {
             StepsHelper.processApiException(e);
         }

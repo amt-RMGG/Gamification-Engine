@@ -2,13 +2,12 @@ Feature: Post an event and get a badge
   Background:
     Given there is a Badges server
     Given my application is register
-
-  Scenario: create a badge
-    Given I have a badge payload
-    When I POST the badge payload to the /badges endpoint
-    Then I receive a 201 status code
+    Given I register a rule with a threshold of 2
 
   Scenario: post an event
     Given I have a event payload
     When I POST the event payload to the /events endpoint
-    Then I GET a badge with ID 1
+    Then I receive a 200 status code
+    When I POST the event payload to the /events endpoint
+    Then I receive a 200 status code
+    Then I receive the badge of the rule

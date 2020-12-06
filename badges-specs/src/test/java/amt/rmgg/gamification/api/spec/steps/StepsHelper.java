@@ -3,9 +3,7 @@ package amt.rmgg.gamification.api.spec.steps;
 import amt.rmgg.gamification.ApiException;
 import amt.rmgg.gamification.ApiResponse;
 import amt.rmgg.gamification.api.DefaultApi;
-import amt.rmgg.gamification.api.dto.ApiKey;
-import amt.rmgg.gamification.api.dto.Application;
-import amt.rmgg.gamification.api.dto.Badge;
+import amt.rmgg.gamification.api.dto.*;
 import amt.rmgg.gamification.api.spec.helpers.Environment;
 
 import java.util.List;
@@ -24,6 +22,10 @@ public class StepsHelper {
     public static DefaultApi api;
 
     public static String lastReceivedLocationHeader;
+
+    public static EventType eventType;
+    public static Rule rule;
+    public static Badge badge;
 
     public static void processApiResponse(ApiResponse apiResponse) {
         lastApiResponse = apiResponse;

@@ -1,8 +1,7 @@
 package amt.rmgg.gamification.api.spec.steps;
 
 import amt.rmgg.gamification.ApiException;
-import amt.rmgg.gamification.api.dto.ApiKey;
-import amt.rmgg.gamification.api.dto.Application;
+import amt.rmgg.gamification.api.dto.*;
 import amt.rmgg.gamification.api.spec.helpers.Environment;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -65,5 +64,45 @@ public class BasicSteps {
         }
         StepsHelper.apiKey = (ApiKey) StepsHelper.lastApiResponse.getData();
         StepsHelper.api.getApiClient().addDefaultHeader("x-api-key", StepsHelper.apiKey.getUuid());
+    }
+
+    @Given("I register a eventType")
+    public void iRegisterABadge() {
+        try {
+            Badge payload = new Badge().name("Super upvoter").experienceValue(10);
+            StepsHelper.lastApiResponse = StepsHelper.api.createBadgeWithHttpInfo(payload);
+            StepsHelper.processApiResponse(StepsHelper.lastApiResponse);
+            StepsHelper.badge = (Badge) StepsHelper.lastApiResponse.getData();
+        } catch (ApiException e) {
+            StepsHelper.processApiException(e);
+        }
+    }
+
+    @Given("I register a eventType")
+    public void iRegisterAEventType() {
+        try {
+            EventType payload = new EventType().name("upvote");
+            StepsHelper.lastApiResponse = StepsHelper.api.createEventTypeWithHttpInfo(payload);
+            StepsHelper.processApiResponse(StepsHelper.lastApiResponse);
+            StepsHelper.eventType = (EventType) StepsHelper.lastApiResponse.getData();
+        } catch (ApiException e) {
+            StepsHelper.processApiException(e);
+        }
+    }
+
+    @Given("I register a rule with a threshold of {int}")
+    public void iRegisterARuleWithAThresholdOf(int n) {
+        iRegisterABadge();
+        iRegisterAEventType();
+        try {
+            Rule payload = new Rule().badgeId(Math.toIntExact(StepsHelper.badge.getId()))
+                    .eventTypeId(StepsHelper.eventType.getId())
+                    .threshold(n);
+            StepsHelper.lastApiResponse = StepsHelper.api.createRuleWithHttpInfo(payload);
+            StepsHelper.processApiResponse(StepsHelper.lastApiResponse);
+            StepsHelper.rule = (Rule)StepsHelper.lastApiResponse.getData();
+        } catch (ApiException e) {
+            StepsHelper.processApiException(e);
+        }
     }
 }
