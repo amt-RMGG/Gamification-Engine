@@ -10,56 +10,22 @@ import io.cucumber.java.en.When;
 
 import java.util.List;
 public class EventSteps {
-    private Environment environment;
-    private DefaultApi api;
-
-    private ApiResponse lastApiResponse;
-    private ApiException lastApiException;
-    private boolean lastApiCallThrewException;
-    private int lastStatusCode;
-
-    private String lastReceivedLocationHeader;
 
     Event event;
-
-    public EventSteps(Environment environment) {
-        this.environment = environment;
-        this.api = environment.getApi();
-    }
-
-    //TODO : Refactorisé ça avec BasicSteps
-
-    private void processApiResponse(ApiResponse apiResponse) {
-        lastApiResponse = apiResponse;
-        lastApiCallThrewException = false;
-        lastApiException = null;
-        lastStatusCode = lastApiResponse.getStatusCode();
-        List<String> locationHeaderValues = (List<String>)lastApiResponse.getHeaders().get("Location");
-        lastReceivedLocationHeader = locationHeaderValues != null ? locationHeaderValues.get(0) : null;
-    }
-
-    private void processApiException(ApiException apiException) {
-        lastApiCallThrewException = true;
-        lastApiResponse = null;
-        lastApiException = apiException;
-        lastStatusCode = lastApiException.getCode();
-    }
-
 
     @Given("I have a event payload")
     public void i_have_a_event_payload() throws Throwable {
         event = new Event()
-                .name("firstUpvote")
                 .userid(1);
     }
 
     @When("^I POST the event payload to the /events endpoint$")
-    public void i_POST_the_event_payload_to_the_events_endpoint() throws Throwable {
+    public void i_POST_the_event_payload_to_the_events_endpoint() {
         try {
-            lastApiResponse = api.sendEventWithHttpInfo(event);
-            processApiResponse(lastApiResponse);
+            StepsHelper.lastApiResponse = StepsHelper.api.sendEventWithHttpInfo(event);
+            StepsHelper.processApiResponse(StepsHelper.lastApiResponse);
         } catch (ApiException e) {
-            processApiException(e);
+            StepsHelper.processApiException(e);
         }
     }
 }

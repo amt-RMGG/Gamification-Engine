@@ -10,7 +10,25 @@ Feature: Basic operations on badges
     When I POST the badge payload to the /badges endpoint
     Then I receive a 201 status code
 
+  Scenario: create the same badge 2 times
+    Given I have a badge payload
+    When I POST the badge payload to the /badges endpoint
+    Then I receive a 201 status code
+    Given I have a badge payload
+    When I POST the badge payload to the /badges endpoint
+    Then I receive a 500 status code
+
   Scenario: get the list of badges
     When I send a GET to the /badges endpoint
     Then I receive a 200 status code
-    Then I GET a badge with ID 1
+
+  Scenario: get the list of my application badges only
+    Given I have a badge payload
+    When I POST the badge payload to the /badges endpoint
+    Then I receive a 201 status code
+    Given another application is register
+    Given I have another badge payload
+    When I POST the badge payload to the /badges endpoint
+    Then I receive a 201 status code
+    When I send a GET to the /badges endpoint
+    Then I receive badges of my application only
