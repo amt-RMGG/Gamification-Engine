@@ -65,7 +65,7 @@ public class BadgesApiController implements BadgesApi {
                 .buildAndExpand(newBadgeEntity.getId()).toUri();
 */
         try {
-            return ResponseEntity.created(new URI("/badges/" + newBadgeEntity.getId())).body(badge);
+            return ResponseEntity.created(new URI("/badges/" + newBadgeEntity.getId())).body(toBadge(newBadgeEntity));
         } catch (URISyntaxException e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
@@ -112,6 +112,7 @@ public class BadgesApiController implements BadgesApi {
 
     public static Badge toBadge(BadgeEntity entity) {
         Badge badge = new Badge();
+        badge.setId(entity.getId());
         badge.setName(entity.getName());
         badge.setExperienceValue(entity.getExperienceValue());
         return badge;

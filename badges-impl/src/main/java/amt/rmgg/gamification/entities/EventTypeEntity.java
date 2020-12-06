@@ -8,19 +8,14 @@ import java.io.Serializable;
 
 @Entity
 @Data
-public class RuleEntity implements Serializable {
+public class EventTypeEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private int threshold;
-
-    @ManyToOne
-    private BadgeEntity badge;
-
-    @ManyToOne
-    private EventTypeEntity eventType;
+    private String name;
+    private int initialValue;
 
 /*    @ManyToOne
     private ApplicationEntity application;*/
