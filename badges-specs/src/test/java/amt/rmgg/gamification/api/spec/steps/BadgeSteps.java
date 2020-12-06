@@ -9,7 +9,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 public class BadgeSteps  {
 
@@ -70,12 +70,13 @@ public class BadgeSteps  {
     @Then("I receive badges of my application only")
     public void iReceiveBadgesOfMyApplicationOnly() {
         try {
-            StepsHelper.lastApiResponse = StepsHelper.api.getBadgesWithHttpInfo();
+            StepsHelper.lastApiResponse = StepsHelper.api.getBadgeWithHttpInfo(1);
             StepsHelper.processApiResponse(StepsHelper.lastApiResponse);
             lastReceivedBadge = (Badge)StepsHelper.lastApiResponse.getData();
             assertEquals("Petit pied", lastReceivedBadge.getName());
         } catch (ApiException e) {
             StepsHelper.processApiException(e);
+            fail();
         }
     }
 }
