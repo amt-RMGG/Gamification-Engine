@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 
 @Entity
@@ -16,6 +17,9 @@ public class EventTypeEntity implements Serializable {
 
     private String name;
     private int initialValue;
+
+    @ManyToMany
+    private List<EventCountEntity> counters;
 
 /*    @ManyToOne
     private ApplicationEntity application;*/

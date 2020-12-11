@@ -1,6 +1,7 @@
 package amt.rmgg.gamification.api.endpoints;
 
 import amt.rmgg.gamification.api.EventsApi;
+import amt.rmgg.gamification.api.model.Badge;
 import amt.rmgg.gamification.api.model.Event;
 import amt.rmgg.gamification.api.util.ApiKeyManager;
 import amt.rmgg.gamification.api.util.EventProcessorService;
@@ -12,9 +13,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.io.InvalidObjectException;
 
 public class EventsApiController implements EventsApi {
 
@@ -31,7 +34,7 @@ public class EventsApiController implements EventsApi {
     EventTypeRepository eventTypeRepository;
 
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<Void> sendEvent(@ApiParam @Valid @RequestBody Event event)
+    public ResponseEntity<Badge> sendEvent(@ApiParam @Valid @RequestBody Event event)
     {
         String apikey = httpServletRequest.getHeader("x-api-key");
         ApplicationEntity applicationEntity = apiKeyManager.getApplicationEntityFromApiKey(apikey);
@@ -42,8 +45,14 @@ public class EventsApiController implements EventsApi {
             return ResponseEntity.notFound().build();
         }
 
-        //TODO
-        return ResponseEntity.ok().build();
-    }
 
+        try {
+            Badge awardedBadge = BadgesApiController.toBadge(eventProcessorService.process(event, apikey));
+            return ResponseEntity.ok(awardedBadge);
+        }
+        catch (InvalidObjectException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid request params", e);
+        }
+
+    }
 }

@@ -1,15 +1,44 @@
 package amt.rmgg.gamification.api.util;
 
+import amt.rmgg.gamification.api.model.Badge;
 import amt.rmgg.gamification.api.model.Event;
+import amt.rmgg.gamification.api.model.EventType;
+import amt.rmgg.gamification.api.model.Rule;
 import amt.rmgg.gamification.entities.BadgeEntity;
+import amt.rmgg.gamification.entities.EventCountEntity;
+import amt.rmgg.gamification.entities.EventTypeEntity;
+import amt.rmgg.gamification.entities.RuleEntity;
+import amt.rmgg.gamification.repositories.AppRepository;
+import amt.rmgg.gamification.repositories.EventCountRepository;
+import amt.rmgg.gamification.repositories.EventTypeRepository;
+import amt.rmgg.gamification.repositories.RuleRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.HttpClientErrorException;
 
 import java.io.InvalidObjectException;
+import java.security.InvalidParameterException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Component
 public class EventProcessorService {
+
+    @Autowired
+    AppRepository appRepository;
+
+    @Autowired
+    RuleRepository ruleRepository;
+
+    @Autowired
+    EventTypeRepository eventTypeRepository;
+
+    @Autowired
+    EventCountRepository eventCountRepository;
+
     //TODO : Temporary default rules definition, needs to be user-defined and stored in database
     private static class Rules {
         private Map<String, BadgeEntity> rules;
@@ -41,24 +70,42 @@ public class EventProcessorService {
     }
 
     public BadgeEntity process(Event event, String applicationKey) throws InvalidObjectException {
-        Rules applicationRules;
-        if(ruleBook.containsKey(applicationKey))
+        if(appRepository.existsById(applicationKey))
         {
-            applicationRules = ruleBook.get(applicationKey);
+            Optional<EventTypeEntity> eventTypeEntityOptional = eventTypeRepository.findById(event.getEventTypeId());
+            if(eventTypeEntityOptional.isEmpty())
+            {
+                throw new InvalidParameterException("Invalid event type");
+            }
+            else
+            {
+                EventTypeEntity eventTypeEntity = eventTypeEntityOptional.get();
+                List<RuleEntity> rules  = ruleRepository.findByEventType(eventTypeEntity);
+                for(RuleEntity ruleEntity : rules)
+                {
+                    List<EventCountEntity> eventCounters = eventCountRepository.findByEventTypeEntityAndUserId(eventTypeEntity, event.getUserid());
+                    if(eventCounters.isEmpty())
+                    {
+                        eventCountRepository.save(new EventCountEntity());
+                    }
+                    for(EventCountEntity counter : eventCounters)
+                    {
+                        counter.setCount(counter.getCount()+1);
+                        eventCountRepository.save(counter);
+                        if(counter.getCount()==ruleEntity.getThreshold())
+                        {
+                            BadgeEntity awardedBadgeEntity = ruleEntity.getBadge();
+                            // !!! WARNING : Can only allows for a single badge to be awarded at a time !!!
+                            return awardedBadgeEntity;
+                        }
+                    }
+                }
+            }
+            return null;//TODO : Behaviour if no awarded badge ???
         }
         else
         {
-            applicationRules = ruleBook.get("default");
+            throw new InvalidParameterException("Invalid API key");
         }
-
-        //TODO FIXME (remplacé pour que ça compile, on en a plus besoin de toute façon)
-        BadgeEntity awardedBadge = applicationRules.rules.get(/*event.getEventRank()*/"Silver");
-        if(awardedBadge == null)
-        {
-            //TODO FIXME (remplacé pour que ça compile, on en a plus besoin de toute façon)
-            throw new InvalidObjectException("Unknown event rank : "/*+event.getEventRank()*/);
-        }
-
-        return awardedBadge;
     }
 }
