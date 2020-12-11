@@ -49,7 +49,7 @@ public class EventSteps {
     @Given("I have a event payload")
     public void i_have_a_event_payload() throws Throwable {
         event = new Event()
-                .name("firstUpvote")
+                .eventTypeId()
                 .userid(1);
     }
 

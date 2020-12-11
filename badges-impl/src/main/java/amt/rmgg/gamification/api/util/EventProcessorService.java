@@ -1,27 +1,19 @@
 package amt.rmgg.gamification.api.util;
 
-import amt.rmgg.gamification.api.model.Badge;
 import amt.rmgg.gamification.api.model.Event;
-import amt.rmgg.gamification.api.model.EventType;
-import amt.rmgg.gamification.api.model.Rule;
 import amt.rmgg.gamification.entities.BadgeEntity;
 import amt.rmgg.gamification.entities.EventCountEntity;
 import amt.rmgg.gamification.entities.EventTypeEntity;
 import amt.rmgg.gamification.entities.RuleEntity;
-import amt.rmgg.gamification.repositories.AppRepository;
 import amt.rmgg.gamification.repositories.EventCountRepository;
 import amt.rmgg.gamification.repositories.EventTypeRepository;
 import amt.rmgg.gamification.repositories.RuleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.HttpClientErrorException;
 
 import java.io.InvalidObjectException;
 import java.security.InvalidParameterException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @Component
@@ -39,34 +31,7 @@ public class EventProcessorService {
     @Autowired
     EventCountRepository eventCountRepository;
 
-    //TODO : Temporary default rules definition, needs to be user-defined and stored in database
-    private static class Rules {
-        private Map<String, BadgeEntity> rules;
-
-        public Rules()
-        {
-            rules = new HashMap<>();
-            BadgeEntity bronzeBadge = new BadgeEntity();
-            bronzeBadge.setExperienceValue(2);
-            rules.put("bronze", bronzeBadge);
-
-            BadgeEntity silverBadge = new BadgeEntity();
-            silverBadge.setExperienceValue(5);
-            rules.put("silver", silverBadge);
-
-            BadgeEntity goldBadge = new BadgeEntity();
-            goldBadge.setExperienceValue(10);
-            rules.put("gold", goldBadge);
-        }
-
-
-    }
-
-    private Map<String, Rules> ruleBook;
-
     EventProcessorService() {
-        ruleBook = new HashMap<>();
-        ruleBook.put("default", new Rules());
     }
 
     public BadgeEntity process(Event event, String applicationKey) throws InvalidObjectException {
