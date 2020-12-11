@@ -42,6 +42,6 @@ public class RegisterAppApiController implements ApplicationsApi {
         ApiKey apiKey = new ApiKey();
         apiKey.setUuid(uuid.toString());
 
-        return ResponseEntity.ok(apiKey);
+        return ResponseEntity.ok(apiKey); //return 200 and not 201 because the created application is not accessible
     }
 }
