@@ -29,7 +29,6 @@
 								"exec": [
 									"var jsonResp = JSON.parse(responseBody);\r",
 									"console.log(jsonResp);\r",
-									"pm.environment.set(\"x-api-key\", jsonResp.uuid);\r",
 									"pm.collectionVariables.set(\"x-api-key\", jsonResp.uuid);"
 								],
 								"type": "text/javascript"
@@ -131,8 +130,7 @@
 								"exec": [
 									"var jsonResp = JSON.parse(responseBody);\r",
 									"console.log(jsonResp);\r",
-									"pm.environment.set(\"badge-id\",jsonResp.id);\r",
-									"\r",
+									"pm.collectionVariables.set(\"badge-id\", jsonResp.id);\r",
 									"pm.test(\"Status code is 201\", function () {\r",
 									"    pm.response.to.have.status(201);\r",
 									"});"
@@ -381,7 +379,7 @@
 								"exec": [
 									"var jsonResp = JSON.parse(responseBody);\r",
 									"console.log(jsonResp);\r",
-									"pm.environment.set(\"eventType-id\", jsonResp.id);\r",
+									"pm.collectionVariables.set(\"eventType-id\", jsonResp.id);\r",
 									"\r",
 									"pm.test(\"Status code is 201\", function () {\r",
 									"    pm.response.to.have.status(201);\r",
@@ -631,7 +629,7 @@
 								"exec": [
 									"var jsonResp = JSON.parse(responseBody);\r",
 									"console.log(jsonResp);\r",
-									"pm.environment.set(\"rule-id\", jsonResp.id);\r",
+									"pm.collectionVariables.set(\"rule-id\", jsonResp.id);\r",
 									"\r",
 									"pm.test(\"Status code is 201\", function () {\r",
 									"    pm.response.to.have.status(201);\r",
@@ -974,27 +972,27 @@
 	],
 	"variable": [
 		{
-			"id": "54d7450f-1ffd-4862-88ae-af1fc73e210e",
+			"id": "bcccae51-288f-495b-883e-a96a06ff26c7",
 			"key": "baseUrl",
 			"value": "localhost:8080"
 		},
 		{
-			"id": "5374d823-c37e-4308-93d0-5e593a649bd6",
+			"id": "b372eeff-af44-433c-9728-119ddd362b11",
 			"key": "x-api-key",
 			"value": ""
 		},
 		{
-			"id": "c55c7477-e053-447d-8861-cae39060aace",
+			"id": "c272b30e-ebee-496e-960a-4198defcc9aa",
 			"key": "badge-id",
 			"value": "0"
 		},
 		{
-			"id": "0725b95b-69dc-4664-97f2-c62f4e98be23",
+			"id": "90043e4a-a23a-4dbc-9d15-fce6549708f0",
 			"key": "eventType-id",
 			"value": "0"
 		},
 		{
-			"id": "a0834af2-083a-4652-bcd6-141f1ef74b0b",
+			"id": "f69314cd-f365-497f-96b4-a6c6a7b38ab5",
 			"key": "rule-id",
 			"value": "0"
 		}
