@@ -28,7 +28,7 @@ import java.util.Optional;
 public class EventProcessorService {
 
     @Autowired
-    AppRepository appRepository;
+    ApiKeyManager apiKeyManager;
 
     @Autowired
     RuleRepository ruleRepository;
@@ -70,7 +70,7 @@ public class EventProcessorService {
     }
 
     public BadgeEntity process(Event event, String applicationKey) throws InvalidObjectException {
-        if(appRepository.existsById(applicationKey))
+        if(apiKeyManager.isKeyValid(applicationKey))
         {
             Optional<EventTypeEntity> eventTypeEntityOptional = eventTypeRepository.findById(event.getEventTypeId());
             if(eventTypeEntityOptional.isEmpty())
@@ -86,7 +86,11 @@ public class EventProcessorService {
                     List<EventCountEntity> eventCounters = eventCountRepository.findByEventTypeEntityAndUserId(eventTypeEntity, event.getUserid());
                     if(eventCounters.isEmpty())
                     {
-                        eventCountRepository.save(new EventCountEntity());
+                        EventCountEntity newCounter = new EventCountEntity();
+                        newCounter.setEventTypeEntity(eventTypeEntity);
+                        newCounter.setUserId(event.getUserid());
+                        eventCountRepository.save(newCounter);
+                        eventCounters = eventCountRepository.findByEventTypeEntityAndUserId(eventTypeEntity, event.getUserid());
                     }
                     for(EventCountEntity counter : eventCounters)
                     {
@@ -95,7 +99,7 @@ public class EventProcessorService {
                         if(counter.getCount()==ruleEntity.getThreshold())
                         {
                             BadgeEntity awardedBadgeEntity = ruleEntity.getBadge();
-                            // !!! WARNING : Can only allows for a single badge to be awarded at a time !!!
+                            // !!! WARNING : Can only allow for a single badge to be awarded at a time !!!
                             return awardedBadgeEntity;
                         }
                     }

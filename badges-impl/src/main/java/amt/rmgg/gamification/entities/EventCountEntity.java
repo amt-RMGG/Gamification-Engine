@@ -1,11 +1,8 @@
 package amt.rmgg.gamification.entities;
 
 import lombok.Data;
-import lombok.Generated;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
@@ -13,8 +10,8 @@ import java.io.Serializable;
 public class EventCountEntity implements Serializable {
 
     @Id
-    @Generated
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
 
     private Integer userId;
 

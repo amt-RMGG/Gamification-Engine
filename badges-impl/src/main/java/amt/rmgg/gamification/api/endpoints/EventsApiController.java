@@ -6,11 +6,13 @@ import amt.rmgg.gamification.api.model.Event;
 import amt.rmgg.gamification.api.util.ApiKeyManager;
 import amt.rmgg.gamification.api.util.EventProcessorService;
 import amt.rmgg.gamification.entities.ApplicationEntity;
+import amt.rmgg.gamification.entities.BadgeEntity;
 import amt.rmgg.gamification.repositories.EventTypeRepository;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.server.ResponseStatusException;
@@ -19,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.InvalidObjectException;
 
+@Controller
 public class EventsApiController implements EventsApi {
 
     @Autowired
@@ -47,7 +50,12 @@ public class EventsApiController implements EventsApi {
 
 
         try {
-            Badge awardedBadge = BadgesApiController.toBadge(eventProcessorService.process(event, apikey));
+            BadgeEntity awardedBadgeEntity = eventProcessorService.process(event, apikey);
+            if(awardedBadgeEntity == null)
+            {
+                return ResponseEntity.ok(null);
+            }
+            Badge awardedBadge = BadgesApiController.toBadge(awardedBadgeEntity);
             return ResponseEntity.ok(awardedBadge);
         }
         catch (InvalidObjectException e) {
