@@ -93,7 +93,7 @@ public class EventTypesApiController implements EventTypesApi {
     public static EventTypeEntity toEventTypeEntity(EventType eventType) {
         EventTypeEntity entity = new EventTypeEntity();
         entity.setName(eventType.getName());
-        entity.setInitialValue(entity.getInitialValue());
+        entity.setInitialValue(eventType.getInitialValue());
         return entity;
     }
 
