@@ -7,8 +7,12 @@ import amt.rmgg.gamification.api.util.ApiKeyManager;
 import amt.rmgg.gamification.api.util.EventProcessorService;
 import amt.rmgg.gamification.entities.ApplicationEntity;
 import amt.rmgg.gamification.entities.BadgeEntity;
+import amt.rmgg.gamification.entities.UserEntity;
+import amt.rmgg.gamification.repositories.AppRepository;
 import amt.rmgg.gamification.repositories.EventTypeRepository;
+import amt.rmgg.gamification.repositories.UserRepository;
 import io.swagger.annotations.ApiParam;
+import org.h2.engine.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,10 +35,16 @@ public class EventsApiController implements EventsApi {
     HttpServletRequest httpServletRequest;
 
     @Autowired
+    AppRepository appRepository;
+
+    @Autowired
     EventProcessorService eventProcessorService;
 
     @Autowired
     EventTypeRepository eventTypeRepository;
+
+    @Autowired
+    UserRepository userRepository;
 
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Badge> sendEvent(@ApiParam @Valid @RequestBody Event event)
@@ -48,6 +58,14 @@ public class EventsApiController implements EventsApi {
             return ResponseEntity.notFound().build();
         }
 
+        if(userRepository.findById((long)event.getUserid()).isEmpty())
+        {
+            UserEntity newUser = new UserEntity();
+            newUser.setId(event.getUserid());
+            userRepository.save(newUser);
+            applicationEntity.getUsers().add(newUser);
+            appRepository.save(applicationEntity);
+        }
 
         try {
             BadgeEntity awardedBadgeEntity = eventProcessorService.process(event, apikey);

@@ -4,14 +4,8 @@ import amt.rmgg.gamification.api.model.Badge;
 import amt.rmgg.gamification.api.model.Event;
 import amt.rmgg.gamification.api.model.EventType;
 import amt.rmgg.gamification.api.model.Rule;
-import amt.rmgg.gamification.entities.BadgeEntity;
-import amt.rmgg.gamification.entities.EventCountEntity;
-import amt.rmgg.gamification.entities.EventTypeEntity;
-import amt.rmgg.gamification.entities.RuleEntity;
-import amt.rmgg.gamification.repositories.AppRepository;
-import amt.rmgg.gamification.repositories.EventCountRepository;
-import amt.rmgg.gamification.repositories.EventTypeRepository;
-import amt.rmgg.gamification.repositories.RuleRepository;
+import amt.rmgg.gamification.entities.*;
+import amt.rmgg.gamification.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
@@ -38,6 +32,12 @@ public class EventProcessorService {
 
     @Autowired
     EventCountRepository eventCountRepository;
+
+    @Autowired
+    BadgeRepository badgeRepository;
+
+    @Autowired
+    UserRepository userRepository;
 
     //TODO : Temporary default rules definition, needs to be user-defined and stored in database
     private static class Rules {
@@ -99,6 +99,11 @@ public class EventProcessorService {
                         if(counter.getCount()==ruleEntity.getThreshold())
                         {
                             BadgeEntity awardedBadgeEntity = ruleEntity.getBadge();
+                            UserEntity userEntity = userRepository.findById((long)event.getUserid()).get();
+                            awardedBadgeEntity.getUsers().add(userEntity);
+                            badgeRepository.save(awardedBadgeEntity);
+                            userEntity.getBadges().add(awardedBadgeEntity);
+                            userRepository.save(userEntity);
                             // !!! WARNING : Can only allow for a single badge to be awarded at a time !!!
 
                             return awardedBadgeEntity;
