@@ -1,0 +1,1001 @@
+{
+	"info": {
+		"_postman_id": "b9ef59ea-5d78-4e42-816a-6e9c43e5d449",
+		"name": "Badge",
+		"description": "An API to demonstrate Swagger and Spring Boot",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Setup",
+			"item": [
+				{
+					"name": "register App",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "c50f7903-eb07-4e29-9c23-e62efc12540c",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "7f0104ac-e131-4474-90f6-1dbf06742236",
+								"exec": [
+									"var jsonResp = JSON.parse(responseBody);\r",
+									"console.log(jsonResp);\r",
+									"pm.collectionVariables.set(\"x-api-key\", jsonResp.uuid);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Application Exemple\",\n    \"description\": \"Un exemple d'application\"\n}",
+							"options": {
+								"raw": {}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/applications",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"applications"
+							]
+						},
+						"description": "register your app to the gamification server"
+					},
+					"response": [
+						{
+							"name": "created",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"description": {
+											"content": "Added as a part of security scheme: apikey",
+											"type": "text/plain"
+										},
+										"key": "X-API-KEY",
+										"value": "<API Key>"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"<string>\",\n    \"description\": \"<string>\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/applications",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"applications"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"uuid\": \"pariatur ut sit id\"\n}"
+						}
+					]
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "badges",
+			"item": [
+				{
+					"name": "create Badge",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "1b34bee2-34ae-4232-9669-c938fe98f79e",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "3ed226d2-52f3-42c4-945f-36371c81bbc2",
+								"exec": [
+									"var jsonResp = JSON.parse(responseBody);\r",
+									"console.log(jsonResp);\r",
+									"pm.collectionVariables.set(\"badge-id\", jsonResp.id);\r",
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Premier badge\",\n    \"experienceValue\": 100\n}",
+							"options": {
+								"raw": {}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/badges",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"badges"
+							]
+						},
+						"description": "create a badge"
+					},
+					"response": [
+						{
+							"name": "created",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"description": {
+											"content": "Added as a part of security scheme: apikey",
+											"type": "text/plain"
+										},
+										"key": "X-API-KEY",
+										"value": "<API Key>"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": \"<long>\",\n    \"name\": \"<string>\",\n    \"experienceValue\": \"<integer>\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/badges",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"badges"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"id\": \"<long>\",\n \"name\": \"<string>\",\n \"experienceValue\": \"<integer>\"\n}"
+						}
+					]
+				},
+				{
+					"name": "get Badges",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "06c4f908-9f40-4286-8ab1-af1c1a3ef3de",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "7c52f9db-b588-48a5-ba14-092ba3392d9f",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/badges",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"badges"
+							]
+						},
+						"description": "get the list of all badges"
+					},
+					"response": [
+						{
+							"name": "success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"description": {
+											"content": "Added as a part of security scheme: apikey",
+											"type": "text/plain"
+										},
+										"key": "X-API-KEY",
+										"value": "<API Key>"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/badges",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"badges"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "[\n {\n  \"id\": \"<long>\",\n  \"name\": \"<string>\",\n  \"experienceValue\": \"<integer>\"\n },\n {\n  \"id\": \"<long>\",\n  \"name\": \"<string>\",\n  \"experienceValue\": \"<integer>\"\n }\n]"
+						}
+					]
+				},
+				{
+					"name": "get Badge",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "954bd384-0750-40f3-9ac7-931a2ad8adb5",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/badges/{{badge-id}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"badges",
+								"{{badge-id}}"
+							]
+						},
+						"description": "get one badge, by id"
+					},
+					"response": [
+						{
+							"name": "success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"description": {
+											"content": "Added as a part of security scheme: apikey",
+											"type": "text/plain"
+										},
+										"key": "X-API-KEY",
+										"value": "<API Key>"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/badges/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"badges",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"id\": \"<long>\",\n \"name\": \"<string>\",\n \"experienceValue\": \"<integer>\"\n}"
+						}
+					]
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "event Types",
+			"item": [
+				{
+					"name": "create Event Type",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ae791ca6-8cf7-4e08-b3fa-8353eb639c57",
+								"exec": [
+									"var jsonResp = JSON.parse(responseBody);\r",
+									"console.log(jsonResp);\r",
+									"pm.collectionVariables.set(\"eventType-id\", jsonResp.id);\r",
+									"\r",
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"upvote\",\n    \"initialValue\": 1\n}",
+							"options": {
+								"raw": {}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/eventTypes",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"eventTypes"
+							]
+						},
+						"description": "add a new event type for the application"
+					},
+					"response": [
+						{
+							"name": "created",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"description": {
+											"content": "Added as a part of security scheme: apikey",
+											"type": "text/plain"
+										},
+										"key": "X-API-KEY",
+										"value": "<API Key>"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": \"<long>\",\n    \"name\": \"<string>\",\n    \"initialValue\": \"<integer>\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/eventTypes",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"eventTypes"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"id\": \"<long>\",\n \"name\": \"<string>\",\n \"initialValue\": \"<integer>\"\n}"
+						}
+					]
+				},
+				{
+					"name": "get Event Types",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "68184360-e229-4733-a112-6391050505c7",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/eventTypes",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"eventTypes"
+							]
+						},
+						"description": "get the list of all event types"
+					},
+					"response": [
+						{
+							"name": "success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"description": {
+											"content": "Added as a part of security scheme: apikey",
+											"type": "text/plain"
+										},
+										"key": "X-API-KEY",
+										"value": "<API Key>"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/eventTypes",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"eventTypes"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "[\n {\n  \"id\": \"<long>\",\n  \"name\": \"<string>\",\n  \"initialValue\": \"<integer>\"\n },\n {\n  \"id\": \"<long>\",\n  \"name\": \"<string>\",\n  \"initialValue\": \"<integer>\"\n }\n]"
+						}
+					]
+				},
+				{
+					"name": "get Event Type",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d1031fe6-251d-4e7e-9470-82c278fa2036",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/eventTypes/{{eventType-id}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"eventTypes",
+								"{{eventType-id}}"
+							]
+						},
+						"description": "get one event type, by id"
+					},
+					"response": [
+						{
+							"name": "success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"description": {
+											"content": "Added as a part of security scheme: apikey",
+											"type": "text/plain"
+										},
+										"key": "X-API-KEY",
+										"value": "<API Key>"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/eventTypes/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"eventTypes",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"id\": \"<long>\",\n \"name\": \"<string>\",\n \"initialValue\": \"<integer>\"\n}"
+						}
+					]
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "rules",
+			"item": [
+				{
+					"name": "create Rule",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "40938726-6ea4-4b63-aeb7-05dd2cf9ab55",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "d702c487-cc79-4fd1-9275-4c1b1e0ffcda",
+								"exec": [
+									"var jsonResp = JSON.parse(responseBody);\r",
+									"console.log(jsonResp);\r",
+									"pm.collectionVariables.set(\"rule-id\", jsonResp.id);\r",
+									"\r",
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"eventTypeId\": 1,\n    \"threshold\": 50,\n    \"badgeId\": 1\n}",
+							"options": {
+								"raw": {}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/rules",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"rules"
+							]
+						},
+						"description": "add a new rule for the application"
+					},
+					"response": [
+						{
+							"name": "created",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"description": {
+											"content": "Added as a part of security scheme: apikey",
+											"type": "text/plain"
+										},
+										"key": "X-API-KEY",
+										"value": "<API Key>"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": \"<long>\",\n    \"eventTypeId\": \"<long>\",\n    \"threshold\": \"<integer>\",\n    \"badgeId\": \"<integer>\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/rules",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"rules"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"id\": \"<long>\",\n \"eventTypeId\": \"<long>\",\n \"threshold\": \"<integer>\",\n \"badgeId\": \"<integer>\"\n}"
+						}
+					]
+				},
+				{
+					"name": "get Rules",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9561dbdd-a748-4a0b-bb2a-11797bc3c979",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/rules",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"rules"
+							]
+						},
+						"description": "get the list of all rules"
+					},
+					"response": [
+						{
+							"name": "success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"description": {
+											"content": "Added as a part of security scheme: apikey",
+											"type": "text/plain"
+										},
+										"key": "X-API-KEY",
+										"value": "<API Key>"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/rules",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"rules"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "[\n {\n  \"id\": \"<long>\",\n  \"eventTypeId\": \"<long>\",\n  \"threshold\": \"<integer>\",\n  \"badgeId\": \"<integer>\"\n },\n {\n  \"id\": \"<long>\",\n  \"eventTypeId\": \"<long>\",\n  \"threshold\": \"<integer>\",\n  \"badgeId\": \"<integer>\"\n }\n]"
+						}
+					]
+				},
+				{
+					"name": "get Rule",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "94faeb50-76ed-45ed-96a8-20e7da31e184",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/rules/{{rule-id}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"rules",
+								"{{rule-id}}"
+							]
+						},
+						"description": "get one rule, by id"
+					},
+					"response": [
+						{
+							"name": "success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"description": {
+											"content": "Added as a part of security scheme: apikey",
+											"type": "text/plain"
+										},
+										"key": "X-API-KEY",
+										"value": "<API Key>"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/rules/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"rules",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"id\": \"<long>\",\n \"eventTypeId\": \"<long>\",\n \"threshold\": \"<integer>\",\n \"badgeId\": \"<integer>\"\n}"
+						}
+					]
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "send Event",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"userid\": 1,\n    \"eventTypeId\": {{eventType-id}}\n}",
+					"options": {
+						"raw": {}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/events",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"events"
+					]
+				},
+				"description": "send an event to the gamification server"
+			},
+			"response": [
+				{
+					"name": "proceed",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"description": {
+									"content": "Added as a part of security scheme: apikey",
+									"type": "text/plain"
+								},
+								"key": "X-API-KEY",
+								"value": "<API Key>"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userid\": \"<integer>\",\n    \"eventTypeId\": \"<long>\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/events",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"events"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "apikey",
+		"apikey": [
+			{
+				"key": "value",
+				"value": "{{x-api-key}}",
+				"type": "string"
+			},
+			{
+				"key": "in",
+				"value": "header",
+				"type": "string"
+			},
+			{
+				"key": "key",
+				"value": "x-api-key",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "5088ad38-b403-47aa-86ae-1c36b2b07cc1",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "c0cd8d30-e398-4035-a263-c426bd83b0d6",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "bcccae51-288f-495b-883e-a96a06ff26c7",
+			"key": "baseUrl",
+			"value": "localhost:8080"
+		},
+		{
+			"id": "b372eeff-af44-433c-9728-119ddd362b11",
+			"key": "x-api-key",
+			"value": ""
+		},
+		{
+			"id": "c272b30e-ebee-496e-960a-4198defcc9aa",
+			"key": "badge-id",
+			"value": "0"
+		},
+		{
+			"id": "90043e4a-a23a-4dbc-9d15-fce6549708f0",
+			"key": "eventType-id",
+			"value": "0"
+		},
+		{
+			"id": "f69314cd-f365-497f-96b4-a6c6a7b38ab5",
+			"key": "rule-id",
+			"value": "0"
+		}
+	],
+	"protocolProfileBehavior": {}
+}

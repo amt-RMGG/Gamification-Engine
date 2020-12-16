@@ -1,16 +1,17 @@
 # Gamification engine
 
+# Test the running application with Postman & newman
+We have defined a Postman collection (Badge.postman_collection.json) that you can import. <br>
+It will use envrionnement variables, like the api key or last badge id created.
+You can also run the collection with Newman to : <br>
+- Register a demo application
+- Add a badge, a event type and a rule
 
-
-# Test the running application with Postman
-Since the application need a api-key everytime someone want to get / add badges, events, etc, we need to pass the api-key in the **headers**. <br/>
-To do that, you'll need to :
-- Register your app with a POST on /applications (with a JSON payload { name : "your_name" })
-- Get the api-key in the response body
-- Add the api-key in your nexts request headers (the field in the headers should be named : **x-api-key**)
-<br/>
-Example here : https://www.getpostman.com/collections/0b87de38afa92b43a3ba
-
+First you need to install Newman : <br>
+`npm install -g newman` <br>
+Then run the .json collection file : <br>
+`newman run Badge.postman_collection.json` <br>
+It will create all the stuff mentionned above and run the test on the status code.
 # Build and run the Badge microservice
 
 You can use maven to build and run the REST API implementation from the command line. After invoking the following maven goal, the Spring Boot server will be up and running, listening for connections on port 8080.
