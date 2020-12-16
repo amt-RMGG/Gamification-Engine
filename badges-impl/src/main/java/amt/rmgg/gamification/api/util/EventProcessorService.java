@@ -100,6 +100,7 @@ public class EventProcessorService {
                         {
                             BadgeEntity awardedBadgeEntity = ruleEntity.getBadge();
                             // !!! WARNING : Can only allow for a single badge to be awarded at a time !!!
+
                             return awardedBadgeEntity;
                         }
                     }
