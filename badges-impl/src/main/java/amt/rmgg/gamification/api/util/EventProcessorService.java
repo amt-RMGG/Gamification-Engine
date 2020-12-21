@@ -1,15 +1,10 @@
 package amt.rmgg.gamification.api.util;
 
-import amt.rmgg.gamification.api.model.Badge;
 import amt.rmgg.gamification.api.model.Event;
-import amt.rmgg.gamification.api.model.EventType;
-import amt.rmgg.gamification.api.model.Rule;
 import amt.rmgg.gamification.entities.*;
 import amt.rmgg.gamification.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.HttpClientErrorException;
 
 import java.io.InvalidObjectException;
 import java.security.InvalidParameterException;
@@ -83,14 +78,14 @@ public class EventProcessorService {
                 List<RuleEntity> rules  = ruleRepository.findByEventType(eventTypeEntity);
                 for(RuleEntity ruleEntity : rules)
                 {
-                    List<EventCountEntity> eventCounters = eventCountRepository.findByEventTypeEntityAndUserId(eventTypeEntity, event.getUserid());
+                    List<EventCountEntity> eventCounters = eventCountRepository.findByEventTypeEntityAndUsername(eventTypeEntity, event.getUsername());
                     if(eventCounters.isEmpty())
                     {
                         EventCountEntity newCounter = new EventCountEntity();
                         newCounter.setEventTypeEntity(eventTypeEntity);
-                        newCounter.setUserId(event.getUserid());
+                        newCounter.setUsername(event.getUsername());
                         eventCountRepository.save(newCounter);
-                        eventCounters = eventCountRepository.findByEventTypeEntityAndUserId(eventTypeEntity, event.getUserid());
+                        eventCounters = eventCountRepository.findByEventTypeEntityAndUsername(eventTypeEntity, event.getUsername());
                     }
                     for(EventCountEntity counter : eventCounters)
                     {
@@ -99,7 +94,7 @@ public class EventProcessorService {
                         if(counter.getCount()==ruleEntity.getThreshold())
                         {
                             BadgeEntity awardedBadgeEntity = ruleEntity.getBadge();
-                            UserEntity userEntity = userRepository.findById((long)event.getUserid()).get();
+                            UserEntity userEntity = userRepository.findById(event.getUsername()).get();
                             awardedBadgeEntity.getUsers().add(userEntity);
                             badgeRepository.save(awardedBadgeEntity);
                             userEntity.getBadges().add(awardedBadgeEntity);

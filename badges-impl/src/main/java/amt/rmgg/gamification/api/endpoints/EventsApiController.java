@@ -12,7 +12,6 @@ import amt.rmgg.gamification.repositories.AppRepository;
 import amt.rmgg.gamification.repositories.EventTypeRepository;
 import amt.rmgg.gamification.repositories.UserRepository;
 import io.swagger.annotations.ApiParam;
-import org.h2.engine.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -58,10 +57,10 @@ public class EventsApiController implements EventsApi {
             return ResponseEntity.notFound().build();
         }
 
-        if(userRepository.findById((long)event.getUserid()).isEmpty())
+        if(userRepository.findById(event.getUsername()).isEmpty())
         {
             UserEntity newUser = new UserEntity();
-            newUser.setId(event.getUserid());
+            newUser.setUsername(event.getUsername());
             userRepository.save(newUser);
             applicationEntity.getUsers().add(newUser);
             appRepository.save(applicationEntity);

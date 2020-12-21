@@ -12,7 +12,7 @@ import java.util.List;
 public class UserEntity implements Serializable {
 
     @Id
-    private long id;
+    private String username;
 
     @ManyToMany
     private List<BadgeEntity> badges;

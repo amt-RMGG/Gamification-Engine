@@ -52,15 +52,15 @@ paths:
             'application/json':
               schema:
                 $ref: '#/components/schemas/Badge'
-  /badges/user/{userId}:
+  /badges/user/{username}:
     get:
       description: get badges for one user
       operationId: getUserBadges
       parameters:
         - in: path
-          name: userId
+          name: username
           schema:
-            type: integer
+            type: string
           required: true
       responses:
         '200':
@@ -231,8 +231,8 @@ components:
     Event:
       type: object
       properties:
-        userid:
-          type: integer
+        username:
+          type: string
         eventTypeId:
           type: integer
           format: int64

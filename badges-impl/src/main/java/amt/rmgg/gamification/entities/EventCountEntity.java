@@ -13,7 +13,7 @@ public class EventCountEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private Integer userId;
+    private String username;
 
     private Integer count=0;
 

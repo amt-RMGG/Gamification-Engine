@@ -86,14 +86,14 @@ public class BadgesApiController implements BadgesApi {
     }
 
     @Override
-    public ResponseEntity<List<Badge>> getUserBadges(@ApiParam(value = "",required=true) @PathVariable("userId") Integer userId) {
+    public ResponseEntity<List<Badge>> getUserBadges(@ApiParam(value = "",required=true) @PathVariable("username") String username) {
         String apikey = httpServletRequest.getHeader("x-api-key");
         ApplicationEntity applicationEntity = apiKeyManager.getApplicationEntityFromApiKey(apikey);
 
         List<UserEntity> users = applicationEntity
                 .getUsers()
                 .stream()
-                .filter(u -> u.getId() == userId)
+                .filter(u -> u.getUsername().equals(username))
                 .limit(1)
                 .collect(Collectors.toList());
 
