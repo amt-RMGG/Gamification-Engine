@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "b9ef59ea-5d78-4e42-816a-6e9c43e5d449",
+		"_postman_id": "c6e91042-5a0e-414c-9efd-e8f0ef768757",
 		"name": "Badge",
 		"description": "An API to demonstrate Swagger and Spring Boot",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -15,7 +15,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "c50f7903-eb07-4e29-9c23-e62efc12540c",
+								"id": "1f73dd18-6d33-45bb-9ef9-95eadb8f8720",
 								"exec": [
 									""
 								],
@@ -25,7 +25,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "7f0104ac-e131-4474-90f6-1dbf06742236",
+								"id": "bb97b88c-c5e2-4713-a7da-acc158521196",
 								"exec": [
 									"var jsonResp = JSON.parse(responseBody);\r",
 									"console.log(jsonResp);\r",
@@ -116,7 +116,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "1b34bee2-34ae-4232-9669-c938fe98f79e",
+								"id": "4f06cfcd-2b64-4bb1-aaa9-d3b82ed4e766",
 								"exec": [
 									""
 								],
@@ -126,7 +126,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "3ed226d2-52f3-42c4-945f-36371c81bbc2",
+								"id": "00e45972-7724-4f78-8dfd-93a316771022",
 								"exec": [
 									"var jsonResp = JSON.parse(responseBody);\r",
 									"console.log(jsonResp);\r",
@@ -214,7 +214,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "06c4f908-9f40-4286-8ab1-af1c1a3ef3de",
+								"id": "c2a01d81-dfce-46fd-acc9-065179f36dda",
 								"exec": [
 									""
 								],
@@ -224,7 +224,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "7c52f9db-b588-48a5-ba14-092ba3392d9f",
+								"id": "d01b55c6-956a-4f0d-9450-a07e2d8e3744",
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {\r",
 									"    pm.response.to.have.status(200);\r",
@@ -293,7 +293,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "954bd384-0750-40f3-9ac7-931a2ad8adb5",
+								"id": "9462109b-7ed1-4ea8-8851-bfac5894ab96",
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {\r",
 									"    pm.response.to.have.status(200);\r",
@@ -375,7 +375,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "ae791ca6-8cf7-4e08-b3fa-8353eb639c57",
+								"id": "a081f0b9-9345-43ec-8320-3e9031a86169",
 								"exec": [
 									"var jsonResp = JSON.parse(responseBody);\r",
 									"console.log(jsonResp);\r",
@@ -464,7 +464,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "68184360-e229-4733-a112-6391050505c7",
+								"id": "5de217d5-3300-45bc-aa8e-45a2fba13a66",
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {\r",
 									"    pm.response.to.have.status(200);\r",
@@ -533,7 +533,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "d1031fe6-251d-4e7e-9470-82c278fa2036",
+								"id": "142d0ffe-8d7a-4afe-9903-0108e7631923",
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {\r",
 									"    pm.response.to.have.status(200);\r",
@@ -615,7 +615,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "40938726-6ea4-4b63-aeb7-05dd2cf9ab55",
+								"id": "7e752e09-e932-4227-8384-fab2457f7968",
 								"exec": [
 									""
 								],
@@ -625,7 +625,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "d702c487-cc79-4fd1-9275-4c1b1e0ffcda",
+								"id": "a05b550b-0c9b-4560-81a0-2e21f19a0566",
 								"exec": [
 									"var jsonResp = JSON.parse(responseBody);\r",
 									"console.log(jsonResp);\r",
@@ -649,7 +649,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"eventTypeId\": 1,\n    \"threshold\": 50,\n    \"badgeId\": 1\n}",
+							"raw": "{\n    \"eventTypeId\": {{eventType-id}},\n    \"threshold\": 50,\n    \"badgeId\": {{badge-id}}\n}",
 							"options": {
 								"raw": {}
 							}
@@ -714,7 +714,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "9561dbdd-a748-4a0b-bb2a-11797bc3c979",
+								"id": "04e498e0-e5dd-4b7c-bf72-be79cf43bbd4",
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {\r",
 									"    pm.response.to.have.status(200);\r",
@@ -783,7 +783,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "94faeb50-76ed-45ed-96a8-20e7da31e184",
+								"id": "035fc73c-f7bc-47e3-a053-ca3ad257cf2c",
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {\r",
 									"    pm.response.to.have.status(200);\r",
@@ -868,7 +868,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"userid\": 1,\n    \"eventTypeId\": {{eventType-id}}\n}",
+					"raw": "{\n    \"username\": \"user1\",\n    \"eventTypeId\": {{eventType-id}}\n}",
 					"options": {
 						"raw": {}
 					}
@@ -952,7 +952,7 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "5088ad38-b403-47aa-86ae-1c36b2b07cc1",
+				"id": "9022e8b4-1925-495b-a9e7-048b5499e92b",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -962,7 +962,7 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "c0cd8d30-e398-4035-a263-c426bd83b0d6",
+				"id": "ea09822d-cab2-46ea-a6b8-11f5ee2f8220",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -972,27 +972,27 @@
 	],
 	"variable": [
 		{
-			"id": "bcccae51-288f-495b-883e-a96a06ff26c7",
+			"id": "b4fc8182-233f-4495-a515-da5be90336d4",
 			"key": "baseUrl",
 			"value": "localhost:8080"
 		},
 		{
-			"id": "b372eeff-af44-433c-9728-119ddd362b11",
+			"id": "849d6bf5-c824-4f83-af26-b05b2a8446a1",
 			"key": "x-api-key",
 			"value": ""
 		},
 		{
-			"id": "c272b30e-ebee-496e-960a-4198defcc9aa",
+			"id": "57a72b47-65d4-4e71-b5ec-a0daf21277ed",
 			"key": "badge-id",
 			"value": "0"
 		},
 		{
-			"id": "90043e4a-a23a-4dbc-9d15-fce6549708f0",
+			"id": "9cb8aff6-f583-44cd-9173-3fc4d9e1b2c5",
 			"key": "eventType-id",
 			"value": "0"
 		},
 		{
-			"id": "f69314cd-f365-497f-96b4-a6c6a7b38ab5",
+			"id": "8886e517-8fd3-45cd-819b-06cf3a584c70",
 			"key": "rule-id",
 			"value": "0"
 		}

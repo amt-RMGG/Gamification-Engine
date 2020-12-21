@@ -52,6 +52,25 @@ paths:
             'application/json':
               schema:
                 $ref: '#/components/schemas/Badge'
+  /badges/user/{username}:
+    get:
+      description: get badges for one user
+      operationId: getUserBadges
+      parameters:
+        - in: path
+          name: username
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: success
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Badge'
   /applications:
     post:
       description: register your app to the gamification server
@@ -129,6 +148,51 @@ paths:
             'application/json':
               schema:
                 $ref: '#/components/schemas/Rule'
+  /eventTypes:
+    post:
+      description: add a new event type for the application
+      operationId: createEventType
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/EventType'
+      responses:
+        '201':
+          description: created
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/EventType'
+    get:
+      description: get the list of all event types
+      operationId: getEventTypes
+      responses:
+        '200':
+          description: success
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EventType'
+  /eventTypes/{id}:
+      get:
+        description: get one event type, by id
+        operationId: getEventType
+        parameters:
+          - in: path
+            name: id
+            schema:
+              type: integer
+            required: true
+        responses:
+          '200':
+            description: success
+            content:
+              'application/json':
+                schema:
+                  $ref: '#/components/schemas/EventType'
 
 
 components:
@@ -145,6 +209,9 @@ components:
     Badge:
       type: object
       properties:
+        id:
+          type: integer
+          format: int64
         name:
           type: string
         experienceValue:
@@ -164,22 +231,33 @@ components:
     Event:
       type: object
       properties:
-        name:
+        username:
           type: string
-        description:
-          type: string
-        userid:
+        eventTypeId:
           type: integer
-        eventRank:
-          type: string
+          format: int64
     Rule:
       type: object
       properties:
-        eventType:
-          type: string
+        id:
+          type: integer
+          format: int64
+        eventTypeId:
+          type: integer
+          format: int64
         threshold:
           type: integer
         badgeId:
+          type: integer
+    EventType:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        initialValue:
           type: integer
 
 

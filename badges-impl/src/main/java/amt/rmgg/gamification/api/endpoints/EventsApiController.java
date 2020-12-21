@@ -7,20 +7,25 @@ import amt.rmgg.gamification.api.util.ApiKeyManager;
 import amt.rmgg.gamification.api.util.EventProcessorService;
 import amt.rmgg.gamification.entities.ApplicationEntity;
 import amt.rmgg.gamification.entities.BadgeEntity;
-import amt.rmgg.gamification.entities.EventEntity;
-import amt.rmgg.gamification.repositories.EventRepository;
+import amt.rmgg.gamification.entities.UserEntity;
+import amt.rmgg.gamification.repositories.AppRepository;
+import amt.rmgg.gamification.repositories.EventTypeRepository;
+import amt.rmgg.gamification.repositories.UserRepository;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.InvalidObjectException;
 
-public class EventApiController implements EventsApi {
+@Controller
+public class EventsApiController implements EventsApi {
 
     @Autowired
     private ApiKeyManager apiKeyManager;
@@ -29,10 +34,16 @@ public class EventApiController implements EventsApi {
     HttpServletRequest httpServletRequest;
 
     @Autowired
-    EventRepository eventRepository;
+    AppRepository appRepository;
 
     @Autowired
     EventProcessorService eventProcessorService;
+
+    @Autowired
+    EventTypeRepository eventTypeRepository;
+
+    @Autowired
+    UserRepository userRepository;
 
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Badge> sendEvent(@ApiParam @Valid @RequestBody Event event)
@@ -46,26 +57,27 @@ public class EventApiController implements EventsApi {
             return ResponseEntity.notFound().build();
         }
 
-        try
+        if(userRepository.findById(event.getUsername()).isEmpty())
         {
-            BadgeEntity awardedBadge = eventProcessorService.process(event, apikey);
-            EventEntity newEventEntity = toEventEntity(event);
-            eventRepository.save(newEventEntity);
-            return ResponseEntity.ok(BadgesApiController.toBadge(awardedBadge));
+            UserEntity newUser = new UserEntity();
+            newUser.setUsername(event.getUsername());
+            userRepository.save(newUser);
+            applicationEntity.getUsers().add(newUser);
+            appRepository.save(applicationEntity);
         }
-        catch (InvalidObjectException e)
-        {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-        }
-    }
 
-    private EventEntity toEventEntity(Event event)
-    {
-        EventEntity entity = new EventEntity();
-        entity.setEventName(event.getName());
-        entity.setDescription(event.getDescription());
-        entity.setEventRank(event.getEventRank());
-        entity.setUserId(event.getUserid());
-        return  entity;
+        try {
+            BadgeEntity awardedBadgeEntity = eventProcessorService.process(event, apikey);
+            if(awardedBadgeEntity == null)
+            {
+                return ResponseEntity.ok(null);
+            }
+            Badge awardedBadge = BadgesApiController.toBadge(awardedBadgeEntity);
+            return ResponseEntity.ok(awardedBadge);
+        }
+        catch (InvalidObjectException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid request params", e);
+        }
+
     }
 }

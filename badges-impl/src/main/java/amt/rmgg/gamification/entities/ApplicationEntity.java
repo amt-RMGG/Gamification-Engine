@@ -22,4 +22,10 @@ public class ApplicationEntity {
 
     @OneToMany
     private List<RuleEntity> rules;
+
+    @OneToMany
+    private List<EventTypeEntity> eventTypes;
+
+    @OneToMany
+    private List<UserEntity> users;
 }

@@ -5,24 +5,18 @@ import lombok.Data;
 import javax.persistence.*;
 import java.io.Serializable;
 
-
 @Entity
 @Data
-public class RuleEntity implements Serializable {
+public class EventCountEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private int threshold;
+    private String username;
+
+    private Integer count=0;
 
     @ManyToOne
-    private BadgeEntity badge;
-
-    @ManyToOne
-    private EventTypeEntity eventType;
-
-/*    @ManyToOne
-    private ApplicationEntity application;*/
-
+    private EventTypeEntity eventTypeEntity;
 }

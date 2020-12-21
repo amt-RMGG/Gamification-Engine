@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 
 @Entity
@@ -17,5 +18,6 @@ public class BadgeEntity implements Serializable {
     private String name;
     private int experienceValue;
 
-
+    @ManyToMany
+    private List<UserEntity> users;
 }
