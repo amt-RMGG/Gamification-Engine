@@ -6,8 +6,8 @@ import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
-public interface EventCountRepository extends CrudRepository<EventCountEntity, Integer> {
+public interface EventCountRepository extends CrudRepository<EventCountEntity, String> {
 
-    List<EventCountEntity> findByEventTypeEntityAndUserId(EventTypeEntity eventType, Integer userId);
+    List<EventCountEntity> findByEventTypeEntityAndUsername(EventTypeEntity eventType, String user);
 
 }

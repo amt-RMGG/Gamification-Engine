@@ -52,6 +52,25 @@ paths:
             'application/json':
               schema:
                 $ref: '#/components/schemas/Badge'
+  /badges/user/{username}:
+    get:
+      description: get badges for one user
+      operationId: getUserBadges
+      parameters:
+        - in: path
+          name: username
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: success
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Badge'
   /applications:
     post:
       description: register your app to the gamification server
@@ -212,8 +231,8 @@ components:
     Event:
       type: object
       properties:
-        userid:
-          type: integer
+        username:
+          type: string
         eventTypeId:
           type: integer
           format: int64

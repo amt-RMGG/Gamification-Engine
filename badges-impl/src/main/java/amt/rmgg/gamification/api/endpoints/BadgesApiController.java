@@ -5,6 +5,7 @@ import amt.rmgg.gamification.api.model.Badge;
 import amt.rmgg.gamification.api.util.ApiKeyManager;
 import amt.rmgg.gamification.entities.ApplicationEntity;
 import amt.rmgg.gamification.entities.BadgeEntity;
+import amt.rmgg.gamification.entities.UserEntity;
 import amt.rmgg.gamification.repositories.AppRepository;
 import amt.rmgg.gamification.repositories.BadgeRepository;
 import io.swagger.annotations.ApiParam;
@@ -82,6 +83,29 @@ public class BadgesApiController implements BadgesApi {
                         .stream()
                         .map(BadgesApiController::toBadge)
                         .collect(Collectors.toList()));
+    }
+
+    @Override
+    public ResponseEntity<List<Badge>> getUserBadges(@ApiParam(value = "",required=true) @PathVariable("username") String username) {
+        String apikey = httpServletRequest.getHeader("x-api-key");
+        ApplicationEntity applicationEntity = apiKeyManager.getApplicationEntityFromApiKey(apikey);
+
+        List<UserEntity> users = applicationEntity
+                .getUsers()
+                .stream()
+                .filter(u -> u.getUsername().equals(username))
+                .limit(1)
+                .collect(Collectors.toList());
+
+        if(users.size() != 1){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        UserEntity user = users.get(0);
+        return ResponseEntity.ok(user
+                .getBadges()
+                .stream()
+                .map(BadgesApiController::toBadge)
+                .collect(Collectors.toList()));
     }
 
     @Override
