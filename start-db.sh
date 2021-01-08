@@ -1,3 +1,3 @@
 #!/bin/bash
 cd docker/topologies/db || exit
-docker-compose up
+docker-compose up -d
