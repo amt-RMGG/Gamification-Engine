@@ -27,12 +27,14 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
 
+
       - name: Run cucumber tests
-        run: chmod +x start-db.sh
-          ./start-db.sh &&
-          cd badges-impl &&
-          mvn spring-boot:run & &&
-          cd ../badges-specs &&
+        run: | 
+          chmod +x start-db.sh
+          ./start-db.sh
+          cd badges-impl
+          mvn spring-boot:run &
+          cd ../badges-specs
           mvn clean test
 
       - name: Build and publish Docker image
