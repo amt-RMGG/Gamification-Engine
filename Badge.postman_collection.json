@@ -947,10 +947,10 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/top/3",
+					"raw": "{{baseUrl}}/top/3",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"{{baseUrl}}"
 					],
 					"port": "8080",
 					"path": [
