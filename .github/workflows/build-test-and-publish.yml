@@ -35,7 +35,6 @@ jobs:
           cd badges-impl
           mvn clean install
           mvn spring-boot:run &
-          sleep 30
           cd ../badges-specs
           mvn clean test
 
