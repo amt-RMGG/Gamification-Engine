@@ -193,6 +193,25 @@ paths:
               'application/json':
                 schema:
                   $ref: '#/components/schemas/EventType'
+  /top/{n}:
+    get:
+      description: get the top n the users ordered by their total experience value
+      operationId: getTopN
+      parameters:
+        - in: path
+          name: n
+          schema:
+            type: integer
+          required: true
+      responses:
+        '200':
+          description: success
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
 
 
 components:
@@ -259,5 +278,13 @@ components:
           type: string
         initialValue:
           type: integer
+    User:
+      type: object
+      properties:
+        username:
+          type: string
+        experienceValue:
+          type: integer
+          format: int64
 
 

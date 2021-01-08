@@ -926,6 +926,40 @@
 					"body": ""
 				}
 			]
+		},
+		{
+			"name": "get top n",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c30546e3-3ae9-4f0d-9f36-494903f3680b",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/top/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"top",
+						"3"
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"auth": {
@@ -972,27 +1006,27 @@
 	],
 	"variable": [
 		{
-			"id": "b4fc8182-233f-4495-a515-da5be90336d4",
+			"id": "1f2e249f-4035-4581-8fc2-a5a40d37eed8",
 			"key": "baseUrl",
 			"value": "localhost:8080"
 		},
 		{
-			"id": "849d6bf5-c824-4f83-af26-b05b2a8446a1",
+			"id": "c89decdf-8646-43d1-818f-7d22a5ea9da3",
 			"key": "x-api-key",
 			"value": ""
 		},
 		{
-			"id": "57a72b47-65d4-4e71-b5ec-a0daf21277ed",
+			"id": "d9f68196-6fdc-40cb-a1f3-e95541d04a4f",
 			"key": "badge-id",
 			"value": "0"
 		},
 		{
-			"id": "9cb8aff6-f583-44cd-9173-3fc4d9e1b2c5",
+			"id": "dc3318b7-a57b-4b36-b23b-fa1ec9198717",
 			"key": "eventType-id",
 			"value": "0"
 		},
 		{
-			"id": "8886e517-8fd3-45cd-819b-06cf3a584c70",
+			"id": "3227e9b0-782a-4203-a1d9-a3cae2471076",
 			"key": "rule-id",
 			"value": "0"
 		}
