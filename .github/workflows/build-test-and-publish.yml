@@ -28,7 +28,8 @@ jobs:
             ${{ runner.os }}-maven-
 
       - name: Run cucumber tests
-        run: ./start-db.sh &&
+        run: chmod +x start-db.sh
+          ./start-db.sh &&
           cd badges-impl &&
           mvn spring-boot:start &&
           cd ../badges-specs &&
