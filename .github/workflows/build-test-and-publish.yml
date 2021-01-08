@@ -33,6 +33,7 @@ jobs:
           chmod +x start-db.sh
           ./start-db.sh
           cd badges-impl
+          mvn clean install
           mvn spring-boot:run &
           cd ../badges-specs
           mvn clean test
