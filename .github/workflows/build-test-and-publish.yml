@@ -27,9 +27,12 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
 
-      - name: Run maven tests
-        run: cd badges-impl &&
-          mvn verify
+      - name: Run cucumber tests
+        run: ./start-db.sh &&
+          cd badges-impl &&
+          mvn spring-boot:start &&
+          cd ../badges-specs &&
+          mvn clean test
 
       - name: Build and publish Docker image
         run: echo ${{ secrets.PAT_RMGG_DEPLOY }} | docker login ghcr.io -u RMGG-deploy --password-stdin &&
