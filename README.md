@@ -49,7 +49,7 @@ curl -X POST --header 'Content-Type: application/json' --header 'Accept: */*' -d
 
 # Test the Badge microservice by running the executable specification
 
-You can use the Cucumber project to validate the API implementation. Do this when the server is running.
+You can use the Cucumber project to validate the API implementation. Do this when the server is up and running.
 
 ```
 cd cd badges-specs/
