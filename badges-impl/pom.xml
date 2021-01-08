@@ -25,8 +25,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <fork>true</fork>
-                    <mainClass>amt.rmgg.gamification.Swagger2SpringBoot</mainClass>
+                    <fork>false</fork>
                 </configuration>
                 <executions>
                     <execution>
