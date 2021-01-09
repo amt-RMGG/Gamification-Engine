@@ -1,4 +1,4 @@
-# Gamification engine
+# Gamification engine 
 
 # Test the running application with Postman & newman
 We have defined a Postman collection (Badge.postman_collection.json) that you can import. <br>
