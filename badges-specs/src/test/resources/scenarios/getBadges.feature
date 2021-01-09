@@ -16,7 +16,7 @@ Feature: Basic operations on badges
     Then I receive a 201 status code
     Given I have a badge payload
     When I POST the badge payload to the /badges endpoint
-    Then I receive a 500 status code
+    Then I receive a 201 status code
 
   Scenario: get the list of badges
     When I send a GET to the /badges endpoint
