@@ -34,7 +34,6 @@ jobs:
           ./start-db.sh
           cd badges-impl
           mvn clean compile spring-boot:start
-          sleep 30
           cd ../badges-specs
           mvn clean test
 
