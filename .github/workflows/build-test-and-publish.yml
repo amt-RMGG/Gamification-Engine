@@ -39,7 +39,7 @@ jobs:
 
       - name: run cucumber tests
         run: |
-          curl http://localhost:8080
+          # curl http://localhost:8080
           cd badges-specs
           mvn clean test
 
