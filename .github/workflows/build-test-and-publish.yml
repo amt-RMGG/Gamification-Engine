@@ -27,6 +27,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
 
+      - name: change environnment
+      run: echo "MYSQL_HOST=db_gamification" > badges-impl/.env
+
       - name: build image
         run: |
           chmod +x ./build-image.sh
@@ -35,14 +38,12 @@ jobs:
       - name: run compose
         run: |
           cd docker/topologies/dev
-          docker-compose up -d
+          docker-compose up
 
       - name: run cucumber tests
         run: |
-          # curl http://localhost:8080
           cd badges-specs
           mvn clean test
-
           #  - name: Run cucumber tests
           #  run: |
           # chmod +x start-db.sh
