@@ -38,7 +38,7 @@ jobs:
       - name: run compose
         run: |
           cd docker/topologies/dev
-          docker-compose up
+          docker-compose up -d
 
       - name: run cucumber tests
         run: |
