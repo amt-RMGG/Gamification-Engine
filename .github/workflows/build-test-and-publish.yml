@@ -27,8 +27,8 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
 
-      - name: change environnment
-      run: echo "MYSQL_HOST=db_gamification" > badges-impl/.env
+    #  - name: change environnment
+    #  run: echo "MYSQL_HOST=db_gamification" > badges-impl/.env
 
       - name: build image
         run: |
