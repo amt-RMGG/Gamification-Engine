@@ -17,8 +17,9 @@ public class RuleSteps {
     @Given("i have a rule payload")
     public void iHaveARulePayload() {
         rule = new amt.rmgg.gamification.api.dto.Rule()
+                .id((long)1)
                 .badgeId(1)
-                .eventType("upvote")
+                .eventTypeId((long)1)
                 .threshold(100);
     }
 

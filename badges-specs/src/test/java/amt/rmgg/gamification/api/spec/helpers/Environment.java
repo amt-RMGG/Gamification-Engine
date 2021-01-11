@@ -1,6 +1,7 @@
 package amt.rmgg.gamification.api.spec.helpers;
 
 import amt.rmgg.gamification.api.DefaultApi;
+import amt.rmgg.gamification.api.DefaultApiTest;
 
 import java.io.IOException;
 import java.util.Properties;

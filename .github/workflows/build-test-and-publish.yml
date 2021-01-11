@@ -27,13 +27,34 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
 
-      - name: Run maven tests
-        run: cd badges-impl &&
-          mvn verify
+    #  - name: change environnment
+    #  run: echo "MYSQL_HOST=db_gamification" > badges-impl/.env
+
+      - name: build image
+        run: |
+          chmod +x ./build-image.sh
+          ./build-image.sh
+
+      - name: run compose
+        run: |
+          cd docker/topologies/dev
+          docker-compose up -d
+
+      - name: run cucumber tests
+        run: |
+          cd badges-specs
+          mvn clean test
+          #  - name: Run cucumber tests
+          #  run: |
+          # chmod +x start-db.sh
+          # ./start-db.sh
+          # cd badges-impl
+          # mvn clean compile spring-boot:start
+          # curl http://localhost:8080
+          # cd ../badges-specs
+          # mvn clean test
 
       - name: Build and publish Docker image
         run: echo ${{ secrets.PAT_RMGG_DEPLOY }} | docker login ghcr.io -u RMGG-deploy --password-stdin &&
-          chmod +x ./build-image.sh &&
-          ./build-image.sh &&
           docker tag amt/gamification ghcr.io/amt-rmgg/amt-gamification &&
           docker push ghcr.io/amt-rmgg/amt-gamification

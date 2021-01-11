@@ -5,6 +5,10 @@ Feature: Basic operations on rules
     Given my application is register
 
   Scenario: post a rule
+    Given I have a badge payload
+    When I POST the badge payload to the /badges endpoint
+    Given I have an eventType payload
+    When I POST the eventType payload to the /eventTypes endpoint
     Given i have a rule payload
     When I POST the rule payload to the /rules endpoint
     Then I receive a 201 status code

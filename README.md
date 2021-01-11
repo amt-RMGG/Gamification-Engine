@@ -1,4 +1,4 @@
-# Gamification engine
+# Gamification engine 
 
 # Test the running application with Postman & newman
 We have defined a Postman collection (Badge.postman_collection.json) that you can import. <br>
@@ -49,7 +49,7 @@ curl -X POST --header 'Content-Type: application/json' --header 'Accept: */*' -d
 
 # Test the Badge microservice by running the executable specification
 
-You can use the Cucumber project to validate the API implementation. Do this when the server is running.
+You can use the Cucumber project to validate the API implementation. Do this when the server is up and running.
 
 ```
 cd cd badges-specs/

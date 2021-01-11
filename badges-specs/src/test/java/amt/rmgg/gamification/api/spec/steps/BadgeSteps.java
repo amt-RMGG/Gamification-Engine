@@ -9,6 +9,8 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
+import java.util.ArrayList;
+
 import static org.junit.Assert.assertEquals;
 
 public class BadgeSteps  {
@@ -41,6 +43,7 @@ public class BadgeSteps  {
     @Given("I have a badge payload")
     public void i_have_a_badge_payload() throws Throwable {
         badge = new amt.rmgg.gamification.api.dto.Badge()
+                .id((long)1)
                 .name("Grosse tête")
                 .experienceValue(100);
     }
@@ -72,7 +75,9 @@ public class BadgeSteps  {
         try {
             StepsHelper.lastApiResponse = StepsHelper.api.getBadgesWithHttpInfo();
             StepsHelper.processApiResponse(StepsHelper.lastApiResponse);
-            lastReceivedBadge = (Badge)StepsHelper.lastApiResponse.getData();
+            ArrayList<Badge> lastResponse = (ArrayList<Badge>) StepsHelper.lastApiResponse.getData();
+            assertEquals(lastResponse.size(), 1);
+            lastReceivedBadge = lastResponse.get(0);
             assertEquals("Petit pied", lastReceivedBadge.getName());
         } catch (ApiException e) {
             StepsHelper.processApiException(e);
