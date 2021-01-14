@@ -18,9 +18,6 @@ public class EventTypeEntity implements Serializable {
     private String name;
     private int initialValue;
 
-    @ManyToMany
-    private List<EventCountEntity> counters;
-
 /*    @ManyToOne
     private ApplicationEntity application;*/
 

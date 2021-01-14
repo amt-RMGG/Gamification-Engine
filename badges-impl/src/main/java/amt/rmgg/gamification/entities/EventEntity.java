@@ -4,18 +4,22 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 
 @Entity
 @Data
-public class EventCountEntity implements Serializable {
+public class EventEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private String username;
+    @Basic
+    @Temporal(TemporalType.TIMESTAMP)
+    private java.util.Date timestamp;
 
-    private Integer count=0;
+    @ManyToOne
+    private UserEntity userEntity;
 
     @ManyToOne
     private EventTypeEntity eventTypeEntity;

@@ -11,7 +11,7 @@ import java.util.TimeZone;
 
 @SpringBootApplication
 @ComponentScan(basePackages = { "amt.rmgg.gamification", "amt.rmgg.gamification.api" })
-public class    Swagger2SpringBoot implements CommandLineRunner {
+public class Swagger2SpringBoot implements CommandLineRunner {
 
     @PostConstruct
     void started() {
