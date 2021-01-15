@@ -16,4 +16,7 @@ public class UserEntity implements Serializable {
 
     @ManyToMany
     private List<BadgeEntity> badges;
+
+    @OneToMany
+    private List<EventEntity> eventHistory;
 }
