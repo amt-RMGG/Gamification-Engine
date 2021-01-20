@@ -35,7 +35,6 @@ public class BasicSteps {
 
     @Then("I receive a {int} status code with a location header")
     public void iReceiveAStatusCodeWithALocationHeader(int arg0) {
-        //TODO
         assert(StepsHelper.lastApiResponse.getStatusCode() == arg0);
     }
 
