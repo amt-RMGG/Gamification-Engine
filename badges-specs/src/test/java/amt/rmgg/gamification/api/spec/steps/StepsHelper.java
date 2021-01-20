@@ -19,6 +19,11 @@ public class StepsHelper {
     public static ApiException lastApiException;
     public static boolean lastApiCallThrewException;
     public static int lastStatusCode;
+    public static int lastCreatedBadgeId;
+    public static int lastCreatedEventId;
+    public static int lastCreatedRuleId;
+    public static int lastCreatedEventTypeId;
+
 
     public static Environment environment;
     public static DefaultApi api;

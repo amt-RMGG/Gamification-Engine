@@ -33,4 +33,3 @@ Feature: Basic operations on badges
     Then I receive a 201 status code
     When I send a GET to the /badges endpoint
     Then I receive badges of my application only
-    Then I GET a badge with ID 1

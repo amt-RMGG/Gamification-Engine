@@ -26,10 +26,12 @@ public class EventTypeSteps {
             StepsHelper.lastApiResponse = StepsHelper.api.createEventTypeWithHttpInfo(eventType);
             StepsHelper.processApiResponse(StepsHelper.lastApiResponse);
             lastReceivedEventType = (EventType) StepsHelper.lastApiResponse.getData();
+            StepsHelper.lastCreatedEventTypeId = ((EventType) StepsHelper.lastApiResponse.getData()).getId().intValue();
         } catch (ApiException e) {
             StepsHelper.processApiException(e);
         }
     }
+
 
     @Then("I receive an eventType that is the same as the payload")
     public void iReceiveAnEventTypeThatIsTheSameAsThePayload() {
