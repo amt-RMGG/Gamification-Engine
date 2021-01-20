@@ -14,24 +14,26 @@ Then run the .json collection file : <br>
 It will create all the stuff mentionned above and run the test on the status code.
 # Build and run the Badge microservice
 
-You can use maven to build and run the REST API implementation from the command line. After invoking the following maven goal, the Spring Boot server will be up and running, listening for connections on port 8080.
+## With maven
+First, from the root directory, start the database with the ```./start-db.sh``` script. Then, go into the `badges-impl` directory and run ```mvn spring-boot:run```.  
 
-```
-cd badges-impl/
-mvn spring-boot:run
-```
+## With docker
+From the root directory, run the script ```./launch-service.sh```.  
+
+# Use the Badge microservice
+After starting the server with any of the methods described above, the Spring Boot server will be running and listening to communications on port 8090.
 
 You can then access:
 
-* the [API documentation](http://localhost:8080/swagger-ui.html), generated from annotations in the code
-* the [API endpoint](http://localhost:8080/), accepting GET and POST requests
+* the [API documentation](http://localhost:8090/swagger-ui/), generated from annotations in the code
+* the [API endpoint](http://localhost:8090/), accepting GET and POST requests
 
 You can use curl to invoke the endpoints:
 
 * To retrieve the list of badges previously created:
 
 ```
-curl -X GET --header 'Accept: application/json' 'http://localhost:8080/badges'
+curl -X GET --header 'Accept: application/json' 'http://localhost:8090/badges'
 ```
 
 * To create a new badge (beware that in the live documentation, there are extra \ line separators in the JSON payload that cause issues in some shells)
