@@ -6,8 +6,8 @@ import amt.rmgg.gamification.api.dto.Application;
 import amt.rmgg.gamification.api.spec.helpers.Environment;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+
+import static org.junit.Assert.*;
 
 public class BasicSteps {
 
@@ -35,6 +35,7 @@ public class BasicSteps {
 
     @Then("I receive a {int} status code with a location header")
     public void iReceiveAStatusCodeWithALocationHeader(int arg0) {
+        assert(StepsHelper.lastApiResponse.getStatusCode() == arg0);
     }
 
     @Given("my application is register")

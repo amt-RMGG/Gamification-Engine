@@ -14,13 +14,12 @@ public class RuleSteps {
     Rule rule;
     Rule lastReceivedRule;
 
-    @Given("i have a rule payload")
+    @Given("I have a rule payload")
     public void iHaveARulePayload() {
         rule = new amt.rmgg.gamification.api.dto.Rule()
-                .id((long)1)
-                .badgeId(1)
-                .eventTypeId((long)1)
-                .threshold(100);
+                .badgeId(StepsHelper.lastCreatedBadgeId)
+                .eventTypeId((long)StepsHelper.lastCreatedEventTypeId)
+                .threshold(2);
     }
 
     @When("^I POST the rule payload to the /rules endpoint$")
@@ -29,6 +28,7 @@ public class RuleSteps {
             StepsHelper.lastApiResponse = StepsHelper.api.createRuleWithHttpInfo(rule);
             StepsHelper.processApiResponse(StepsHelper.lastApiResponse);
             lastReceivedRule = (Rule)StepsHelper.lastApiResponse.getData();
+            StepsHelper.lastCreatedRuleId = lastReceivedRule.getId().intValue();
         } catch (ApiException e) {
             StepsHelper.processApiException(e);
         }
@@ -36,7 +36,9 @@ public class RuleSteps {
 
     @Then("I receive a rule that is the same as the payload")
     public void iReceiveARuleThatIsTheSameAsThePayload() {
-        assertEquals(lastReceivedRule, rule);
+        assertEquals(lastReceivedRule.getEventTypeId(), rule.getEventTypeId());
+        assertEquals(lastReceivedRule.getThreshold(), rule.getThreshold());
+        assertEquals(lastReceivedRule.getBadgeId(), rule.getBadgeId());
     }
 
     @When("^I send a GET to the /rules endpoint$")
@@ -59,4 +61,14 @@ public class RuleSteps {
         }
     }
 
+    @Then("I GET the created rule")
+    public void iGETTheCreatedRule() {
+        try {
+            StepsHelper.lastApiResponse = StepsHelper.api.getRuleWithHttpInfo(StepsHelper.lastCreatedRuleId);
+            StepsHelper.processApiResponse(StepsHelper.lastApiResponse);
+            lastReceivedRule = (Rule)StepsHelper.lastApiResponse.getData();
+        } catch (ApiException e) {
+            StepsHelper.processApiException(e);
+        }
+    }
 }
