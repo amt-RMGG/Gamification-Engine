@@ -54,7 +54,7 @@ curl -X POST --header 'Content-Type: application/json' --header 'Accept: */*' -d
 You can use the Cucumber project to validate the API implementation. Do this when the server is up and running.
 
 ```
-cd cd badges-specs/
+cd badges-specs/
 mvn clean test
 ```
 You will see the test results in the console, but you can also open the file located in `./target/cucumber`
