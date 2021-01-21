@@ -1,17 +1,12 @@
 package amt.rmgg.gamification.api.util;
 
-import amt.rmgg.gamification.api.model.Event;
 import amt.rmgg.gamification.entities.*;
 import amt.rmgg.gamification.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.InvalidObjectException;
-import java.security.InvalidParameterException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 
 @Component
 public class EventProcessorService {
