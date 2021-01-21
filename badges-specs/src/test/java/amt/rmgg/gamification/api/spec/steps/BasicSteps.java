@@ -53,6 +53,15 @@ public class BasicSteps {
         StepsHelper.api.getApiClient().addDefaultHeader("x-api-key", StepsHelper.apiKey.getUuid());
     }
 
+    @Given("my application is not registered")
+    public void myApplicationIsNotRegistered() {
+//        StepsHelper.app = new Application()
+//                .description("An unauthorized app!")
+//                .name("TheIllegalApp");
+//        StepsHelper.apiKey = (ApiKey) new ApiKey();
+        StepsHelper.api.getApiClient().addDefaultHeader("x-api-key", "");
+    }
+
     @Given("another application is register")
     public void anotherApplicationIsRegister() {
         StepsHelper.app = new Application()

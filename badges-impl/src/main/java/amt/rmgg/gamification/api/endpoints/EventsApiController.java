@@ -5,7 +5,10 @@ import amt.rmgg.gamification.api.model.Badge;
 import amt.rmgg.gamification.api.model.Event;
 import amt.rmgg.gamification.api.util.ApiKeyManager;
 import amt.rmgg.gamification.api.util.EventProcessorService;
-import amt.rmgg.gamification.entities.*;
+import amt.rmgg.gamification.entities.ApplicationEntity;
+import amt.rmgg.gamification.entities.BadgeEntity;
+import amt.rmgg.gamification.entities.EventEntity;
+import amt.rmgg.gamification.entities.UserEntity;
 import amt.rmgg.gamification.repositories.AppRepository;
 import amt.rmgg.gamification.repositories.EventTypeRepository;
 import amt.rmgg.gamification.repositories.UserRepository;
@@ -21,7 +24,6 @@ import org.springframework.web.server.ResponseStatusException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.InvalidObjectException;
-import java.sql.Timestamp;
 import java.util.Date;
 
 @Controller

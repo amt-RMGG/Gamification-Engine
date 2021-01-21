@@ -7,6 +7,7 @@ import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Arrays;
 
 @Component
 public class ApiOriginFilter implements javax.servlet.Filter {
@@ -24,15 +25,15 @@ public class ApiOriginFilter implements javax.servlet.Filter {
         String requestTarget = httpRequest.getServletPath();
         String method = httpRequest.getMethod();
 
-        String[] endpoints = {"/badges/", "/application/", "/rules/", "/events"}; //TODO use for verification below
+        String[] endpoints = {"/badges", "/applications", "/rules", "/events", "/eventTypes", "/top"};
 
-        if(requestTarget.equals("/badges/") || requestTarget.equals("/applications/") || requestTarget.equals("/rules/") || requestTarget.equals("/events/") ) {
+        if(Arrays.asList(endpoints).contains(requestTarget)) {
             // Seul cas ou on a pas besoin de la clé API est lorsqu'on ajoute une nouvelle application
-            if (requestTarget.equals("/applications/") && method.equals("POST")) {
+            if (requestTarget.equals("/applications") && method.equals("POST")) {
                 System.out.println("No need to check API KEY");
             } else {
                 String apiKey = httpRequest.getHeader("x-api-key");
-                if (apiKey.equals("") || !apiKeyManager.isKeyValid(apiKey)) {
+                if (apiKey == null || apiKey.equals("") || !apiKeyManager.isKeyValid(apiKey)) {
                     res.sendError(403, "Key is not valid");
                     return;
                 }
