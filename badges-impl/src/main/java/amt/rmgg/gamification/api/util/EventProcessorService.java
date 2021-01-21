@@ -23,7 +23,7 @@ public class EventProcessorService {
     RuleRepository ruleRepository;
 
     @Autowired
-    EventCounterRepository eventCounterRepository;
+    EventTypeRepository eventTypeRepository;
 
     @Autowired
     EventRepository eventRepository;
@@ -37,12 +37,12 @@ public class EventProcessorService {
     public BadgeEntity process(EventEntity event) throws InvalidObjectException {
 
         eventRepository.save(event);
-        EventCounterEntity eventCounterEntity = event.getEventCounterEntity();
+        EventTypeEntity eventTypeEntity = event.getEventTypeEntity();
         UserEntity userEntity = event.getUserEntity();
-        List<RuleEntity> rules  = ruleRepository.findByEventCounter(eventCounterEntity);
+        List<RuleEntity> rules  = ruleRepository.findByEventType(eventTypeEntity);
         for(RuleEntity ruleEntity : rules)
         {
-            long noOfEvents = eventRepository.countEventEntitiesByUserEntityAndEventCounterEntity(userEntity, eventCounterEntity);
+            long noOfEvents = eventRepository.countEventEntitiesByUserEntityAndEventTypeEntity(userEntity, eventTypeEntity);
             if(noOfEvents==ruleEntity.getThreshold())
             {
                 BadgeEntity awardedBadgeEntity = ruleEntity.getBadge();
