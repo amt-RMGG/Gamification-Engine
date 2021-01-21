@@ -16,9 +16,9 @@ services:
     volumes:
       - ./initdb:/docker-entrypoint-initdb.d
 
-  gamification_server:
+  gamificationServer:
     image: amt/gamification
-    container_name: gamification_server
+    container_name: gamificationServer
     environment:
       - MYSQL_HOST=gamification_db
     depends_on:
