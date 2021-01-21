@@ -1,12 +1,12 @@
 package amt.rmgg.gamification.api.endpoints;
 
-import amt.rmgg.gamification.api.EventCountersApi;
-import amt.rmgg.gamification.api.model.EventCounter;
+import amt.rmgg.gamification.api.EventTypesApi;
+import amt.rmgg.gamification.api.model.EventType;
 import amt.rmgg.gamification.api.util.ApiKeyManager;
 import amt.rmgg.gamification.entities.ApplicationEntity;
-import amt.rmgg.gamification.entities.EventCounterEntity;
+import amt.rmgg.gamification.entities.EventTypeEntity;
 import amt.rmgg.gamification.repositories.AppRepository;
-import amt.rmgg.gamification.repositories.EventCounterRepository;
+import amt.rmgg.gamification.repositories.EventTypeRepository;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Controller
-public class EventCountersApiController implements EventCountersApi {
+public class EventTypesApiController implements EventTypesApi {
     @Autowired
     private ApiKeyManager apiKeyManager;
     @Autowired
@@ -33,10 +33,10 @@ public class EventCountersApiController implements EventCountersApi {
     @Autowired
     HttpServletRequest httpServletRequest;
     @Autowired
-    EventCounterRepository eventCounterRepository;
+    EventTypeRepository eventTypeRepository;
 
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<EventCounter> createEventCounter(@ApiParam(value = "", required = true) @Valid @RequestBody EventCounter eventCounter ) {
+    public ResponseEntity<EventType> createEventType(@ApiParam(value = "", required = true) @Valid @RequestBody EventType eventType ) {
 
         String apikey = httpServletRequest.getHeader("x-api-key");
         ApplicationEntity applicationEntity = apiKeyManager.getApplicationEntityFromApiKey(apikey);
@@ -45,65 +45,65 @@ public class EventCountersApiController implements EventCountersApi {
             return ResponseEntity.notFound().build();
         }
 
-        EventCounterEntity newEventCounterEntity = toEventCounterEntity(eventCounter);
-        applicationEntity.getEventCounters().add(newEventCounterEntity);
+        EventTypeEntity newEventTypeEntity = toEventTypeEntity(eventType);
+        applicationEntity.getEventTypes().add(newEventTypeEntity);
 
-        eventCounterRepository.save(newEventCounterEntity);
+        eventTypeRepository.save(newEventTypeEntity);
 
         try {
-            return ResponseEntity.created(new URI("/eventCounters/" + newEventCounterEntity.getId())).body(toEventCounter(newEventCounterEntity));
+            return ResponseEntity.created(new URI("/eventTypes/" + newEventTypeEntity.getId())).body(toEventType(newEventTypeEntity));
         } catch (URISyntaxException e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
 
-    public ResponseEntity<List<EventCounter>> getEventCounters() {
+    public ResponseEntity<List<EventType>> getEventTypes() {
         String apikey = httpServletRequest.getHeader("x-api-key");
         ApplicationEntity applicationEntity = apiKeyManager.getApplicationEntityFromApiKey(apikey);
 
         return ResponseEntity.ok(
                 applicationEntity
-                        .getEventCounters()
+                        .getEventTypes()
                         .stream()
-                        .map(EventCountersApiController::toEventCounter)
+                        .map(EventTypesApiController::toEventType)
                         .collect(Collectors.toList()));
     }
 
     @Override
-    public ResponseEntity<EventCounter> getEventCounter(@ApiParam(value = "",required=true) @PathVariable("id") Integer id) {
+    public ResponseEntity<EventType> getEventType(@ApiParam(value = "",required=true) @PathVariable("id") Integer id) {
         String apikey = httpServletRequest.getHeader("x-api-key");
         ApplicationEntity applicationEntity = apiKeyManager.getApplicationEntityFromApiKey(apikey);
 
-        List<EventCounterEntity> eventCounters = applicationEntity
-                .getEventCounters()
+        List<EventTypeEntity> eventTypes = applicationEntity
+                .getEventTypes()
                 .stream()
                 .filter(et -> et.getId() == id)
                 .limit(1)
                 .collect(Collectors.toList());
 
-        if(eventCounters.size() != 1){
+        if(eventTypes.size() != 1){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
-        EventCounterEntity eventCounterEntity = eventCounters.get(0);
-        return ResponseEntity.ok(toEventCounter(eventCounterEntity));
+        EventTypeEntity eventTypeEntity = eventTypes.get(0);
+        return ResponseEntity.ok(toEventType(eventTypeEntity));
     }
 
 
-    public static EventCounterEntity toEventCounterEntity(EventCounter eventCounter) {
-        EventCounterEntity entity = new EventCounterEntity();
-        entity.setName(eventCounter.getName());
+    public static EventTypeEntity toEventTypeEntity(EventType eventType) {
+        EventTypeEntity entity = new EventTypeEntity();
+        entity.setName(eventType.getName());
         entity.setInitialValue(entity.getInitialValue());
         return entity;
     }
 
 
-    public static EventCounter toEventCounter(EventCounterEntity entity){
-        EventCounter eventCounter = new EventCounter();
-        eventCounter.setId(entity.getId());
-        eventCounter.setName(entity.getName());
-        eventCounter.setInitialValue(entity.getInitialValue());
-        return eventCounter;
+    public static EventType toEventType(EventTypeEntity entity){
+        EventType eventType = new EventType();
+        eventType.setId(entity.getId());
+        eventType.setName(entity.getName());
+        eventType.setInitialValue(entity.getInitialValue());
+        return eventType;
     }
 
 }

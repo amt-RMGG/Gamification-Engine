@@ -8,8 +8,8 @@ Feature: All Steps
     Given I have a badge payload
     When I POST the badge payload to the /badges endpoint
     Then I receive a 201 status code with a location header
-    Given I have an eventCounter payload
-    When I POST the eventCounter payload to the /eventCounters endpoint
+    Given I have an eventType payload
+    When I POST the eventType payload to the /eventTypes endpoint
     Then I receive a 201 status code with a location header
     Given I have a rule payload
     When I POST the rule payload to the /rules endpoint

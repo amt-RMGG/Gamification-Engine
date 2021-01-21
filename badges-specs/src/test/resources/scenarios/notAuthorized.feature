@@ -18,9 +18,9 @@ Feature: Try to use the API as a non-authorized application
     When I POST the rule payload to the /rules endpoint
     Then I receive a 403 status code
 
-  Scenario: Try to post an event counter as a non-authorized application
-    Given I have an eventCounter payload
-    When I POST the eventCounter payload to the /eventCounters endpoint
+  Scenario: Try to post an event type as a non-authorized application
+    Given I have an eventType payload
+    When I POST the eventType payload to the /eventTypes endpoint
     Then I receive a 403 status code
 
   Scenario: Try to post an event as a non-authorized application

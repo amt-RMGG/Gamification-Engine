@@ -5,7 +5,7 @@ We have defined a Postman collection (Badge.postman_collection.json) that you ca
 It will use envrionnement variables, like the api key or last badge id created.
 You can also run the collection with Newman to : <br>
 - Register a demo application
-- Add a badge, a event counter and a rule
+- Add a badge, a event type and a rule
 
 First you need to install Newman : <br>
 `npm install -g newman` <br>

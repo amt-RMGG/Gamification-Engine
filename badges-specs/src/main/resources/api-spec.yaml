@@ -148,25 +148,25 @@ paths:
             'application/json':
               schema:
                 $ref: '#/components/schemas/Rule'
-  /eventCounters:
+  /eventTypes:
     post:
-      description: add a new event counter for the application
-      operationId: createEventCounter
+      description: add a new event type for the application
+      operationId: createEventType
       requestBody:
         content:
           'application/json':
             schema:
-              $ref: '#/components/schemas/EventCounter'
+              $ref: '#/components/schemas/EventType'
       responses:
         '201':
           description: created
           content:
             'application/json':
               schema:
-                $ref: '#/components/schemas/EventCounter'
+                $ref: '#/components/schemas/EventType'
     get:
-      description: get the list of all event counters
-      operationId: getEventCounters
+      description: get the list of all event types
+      operationId: getEventTypes
       responses:
         '200':
           description: success
@@ -175,11 +175,11 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/EventCounter'
-  /eventCounters/{id}:
+                  $ref: '#/components/schemas/EventType'
+  /eventTypes/{id}:
     get:
-      description: get one event counter, by id
-      operationId: getEventCounter
+      description: get one event type, by id
+      operationId: getEventType
       parameters:
         - in: path
           name: id
@@ -192,7 +192,7 @@ paths:
           content:
             'application/json':
               schema:
-                $ref: '#/components/schemas/EventCounter'
+                $ref: '#/components/schemas/EventType'
   /top/{n}:
     get:
       description: get the top n the users ordered by their total experience value
@@ -252,7 +252,7 @@ components:
       properties:
         username:
           type: string
-        eventCounterId:
+        eventTypeId:
           type: integer
           format: int64
     Rule:
@@ -261,14 +261,14 @@ components:
         id:
           type: integer
           format: int64
-        eventCounterId:
+        eventTypeId:
           type: integer
           format: int64
         threshold:
           type: integer
         badgeId:
           type: integer
-    EventCounter:
+    EventType:
       type: object
       properties:
         id:

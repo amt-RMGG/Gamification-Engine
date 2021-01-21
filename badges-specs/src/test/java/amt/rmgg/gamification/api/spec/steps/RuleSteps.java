@@ -18,7 +18,7 @@ public class RuleSteps {
     public void iHaveARulePayload() {
         rule = new amt.rmgg.gamification.api.dto.Rule()
                 .badgeId(StepsHelper.lastCreatedBadgeId)
-                .eventCounterId((long)StepsHelper.lastCreatedEventCounterId)
+                .eventTypeId((long)StepsHelper.lastCreatedEventTypeId)
                 .threshold(2);
     }
 
@@ -36,7 +36,7 @@ public class RuleSteps {
 
     @Then("I receive a rule that is the same as the payload")
     public void iReceiveARuleThatIsTheSameAsThePayload() {
-        assertEquals(lastReceivedRule.getEventCounterId(), rule.getEventCounterId());
+        assertEquals(lastReceivedRule.getEventTypeId(), rule.getEventTypeId());
         assertEquals(lastReceivedRule.getThreshold(), rule.getThreshold());
         assertEquals(lastReceivedRule.getBadgeId(), rule.getBadgeId());
     }

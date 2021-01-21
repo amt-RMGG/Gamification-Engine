@@ -1,11 +1,17 @@
 package amt.rmgg.gamification.api.spec.steps;
 
 import amt.rmgg.gamification.ApiException;
+import amt.rmgg.gamification.ApiResponse;
+import amt.rmgg.gamification.api.DefaultApi;
 import amt.rmgg.gamification.api.dto.Badge;
 import amt.rmgg.gamification.api.dto.Event;
+import amt.rmgg.gamification.api.dto.EventType;
+import amt.rmgg.gamification.api.spec.helpers.Environment;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+
+import java.util.List;
 public class EventSteps {
 
     Event event;
@@ -15,7 +21,7 @@ public class EventSteps {
     public void i_have_a_event_payload() throws Throwable {
         event = new Event()
                 .username("Jean-Pierre Bacri")
-                .eventCounterId((long)StepsHelper.lastCreatedEventCounterId);
+                .eventTypeId((long)StepsHelper.lastCreatedEventTypeId);
     }
 
     @When("^I POST the event payload to the /events endpoint$")
@@ -23,7 +29,7 @@ public class EventSteps {
         try {
             StepsHelper.lastApiResponse = StepsHelper.api.sendEventWithHttpInfo(event);
             StepsHelper.processApiResponse(StepsHelper.lastApiResponse);
-            // StepsHelper.lastCreatedEventId = ((Event) StepsHelper.lastApiResponse.getData()).getEventCounterId().intValue();
+            // StepsHelper.lastCreatedEventId = ((Event) StepsHelper.lastApiResponse.getData()).getEventTypeId().intValue();
         } catch (ApiException e) {
             StepsHelper.processApiException(e);
         }

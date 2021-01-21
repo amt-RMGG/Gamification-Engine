@@ -5,10 +5,10 @@ import amt.rmgg.gamification.api.model.Rule;
 import amt.rmgg.gamification.api.util.ApiKeyManager;
 import amt.rmgg.gamification.entities.ApplicationEntity;
 import amt.rmgg.gamification.entities.BadgeEntity;
-import amt.rmgg.gamification.entities.EventCounterEntity;
+import amt.rmgg.gamification.entities.EventTypeEntity;
 import amt.rmgg.gamification.entities.RuleEntity;
 import amt.rmgg.gamification.repositories.BadgeRepository;
-import amt.rmgg.gamification.repositories.EventCounterRepository;
+import amt.rmgg.gamification.repositories.EventTypeRepository;
 import amt.rmgg.gamification.repositories.RuleRepository;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +39,7 @@ public class RulesApiController implements RulesApi {
     @Autowired
     HttpServletRequest httpServletRequest;
     @Autowired
-    EventCounterRepository eventCounterRepository;
+    EventTypeRepository eventTypeRepository;
 
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Rule> createRule(@ApiParam(value = "", required = true) @Valid @RequestBody Rule rule ) {
@@ -57,12 +57,12 @@ public class RulesApiController implements RulesApi {
             return ResponseEntity.notFound().build();
         }
 
-        Optional<EventCounterEntity> eventCounterEntity = eventCounterRepository.findById(rule.getEventCounterId());
-        if(eventCounterEntity.isEmpty()){
+        Optional<EventTypeEntity> eventTypeEntity = eventTypeRepository.findById(rule.getEventTypeId());
+        if(eventTypeEntity.isEmpty()){
             return ResponseEntity.notFound().build();
         }
 
-        RuleEntity newRuleEntity = toRuleEntity(rule, badgeEntity.get(), eventCounterEntity.get());
+        RuleEntity newRuleEntity = toRuleEntity(rule, badgeEntity.get(), eventTypeEntity.get());
         applicationEntity.getRules().add(newRuleEntity);
 
         ruleRepository.save(newRuleEntity);
@@ -107,9 +107,9 @@ public class RulesApiController implements RulesApi {
     }
 
 
-    public static RuleEntity toRuleEntity(Rule rule, BadgeEntity badge, EventCounterEntity eventCounter) {
+    public static RuleEntity toRuleEntity(Rule rule, BadgeEntity badge, EventTypeEntity eventType) {
         RuleEntity entity = new RuleEntity();
-        entity.setEventCounter(eventCounter);
+        entity.setEventType(eventType);
         entity.setThreshold(rule.getThreshold());
         entity.setBadge(badge);
         return entity;
@@ -119,7 +119,7 @@ public class RulesApiController implements RulesApi {
     public static Rule toRule(RuleEntity entity){
         Rule rule = new Rule();
         rule.setId(entity.getId());
-        rule.setEventCounterId(entity.getEventCounter().getId());
+        rule.setEventTypeId(entity.getEventType().getId());
         rule.setThreshold(entity.getThreshold());
         rule.setBadgeId((int) entity.getBadge().getId());
         return rule;

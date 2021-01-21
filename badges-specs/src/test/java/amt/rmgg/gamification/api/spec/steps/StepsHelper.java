@@ -22,7 +22,7 @@ public class StepsHelper {
     public static int lastCreatedBadgeId;
     public static int lastCreatedEventId;
     public static int lastCreatedRuleId;
-    public static int lastCreatedEventCounterId;
+    public static int lastCreatedEventTypeId;
 
 
     public static Environment environment;

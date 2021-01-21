@@ -9,7 +9,7 @@ import java.util.List;
 
 @Entity
 @Data
-public class EventCounterEntity implements Serializable {
+public class EventTypeEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -25,7 +25,7 @@ public class ApiOriginFilter implements javax.servlet.Filter {
         String requestTarget = httpRequest.getServletPath();
         String method = httpRequest.getMethod();
 
-        String[] endpoints = {"/badges", "/applications", "/rules", "/events", "/eventCounters", "/top"};
+        String[] endpoints = {"/badges", "/applications", "/rules", "/events", "/eventTypes", "/top"};
 
         if(Arrays.asList(endpoints).contains(requestTarget)) {
             // Seul cas ou on a pas besoin de la clé API est lorsqu'on ajoute une nouvelle application

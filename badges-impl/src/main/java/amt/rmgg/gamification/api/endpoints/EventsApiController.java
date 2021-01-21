@@ -5,9 +5,12 @@ import amt.rmgg.gamification.api.model.Badge;
 import amt.rmgg.gamification.api.model.Event;
 import amt.rmgg.gamification.api.util.ApiKeyManager;
 import amt.rmgg.gamification.api.util.EventProcessorService;
-import amt.rmgg.gamification.entities.*;
+import amt.rmgg.gamification.entities.ApplicationEntity;
+import amt.rmgg.gamification.entities.BadgeEntity;
+import amt.rmgg.gamification.entities.EventEntity;
+import amt.rmgg.gamification.entities.UserEntity;
 import amt.rmgg.gamification.repositories.AppRepository;
-import amt.rmgg.gamification.repositories.EventCounterRepository;
+import amt.rmgg.gamification.repositories.EventTypeRepository;
 import amt.rmgg.gamification.repositories.UserRepository;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +24,6 @@ import org.springframework.web.server.ResponseStatusException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.InvalidObjectException;
-import java.sql.Timestamp;
 import java.util.Date;
 
 @Controller
@@ -40,7 +42,7 @@ public class EventsApiController implements EventsApi {
     EventProcessorService eventProcessorService;
 
     @Autowired
-    EventCounterRepository eventCounterRepository;
+    EventTypeRepository eventTypeRepository;
 
     @Autowired
     UserRepository userRepository;
@@ -84,8 +86,8 @@ public class EventsApiController implements EventsApi {
         EventEntity eventEntity = new EventEntity();
         eventEntity.setUserEntity(userRepository.findByUsername(event.getUsername())
                 .orElseThrow(() -> new InvalidObjectException("Unknown username")));
-        eventEntity.setEventCounterEntity(eventCounterRepository.findById(event.getEventCounterId())
-                .orElseThrow(() -> new InvalidObjectException("Unknown event counter")));
+        eventEntity.setEventTypeEntity(eventTypeRepository.findById(event.getEventTypeId())
+                .orElseThrow(() -> new InvalidObjectException("Unknown event type")));
         eventEntity.setTimestamp(new Date());
         return eventEntity;
     }
