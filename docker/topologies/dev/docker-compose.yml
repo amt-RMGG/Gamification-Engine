@@ -25,7 +25,7 @@ services:
       - gamification_db
     ports:
       - "8090:8090"
-      - "8443:8443"
+      - "8444:8443"
     expose:
       - '8090'
 
