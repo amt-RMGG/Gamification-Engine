@@ -7,7 +7,7 @@ import amt.rmgg.gamification.api.util.ApiKeyManager;
 import amt.rmgg.gamification.api.util.EventProcessorService;
 import amt.rmgg.gamification.entities.*;
 import amt.rmgg.gamification.repositories.AppRepository;
-import amt.rmgg.gamification.repositories.EventTypeRepository;
+import amt.rmgg.gamification.repositories.EventCounterRepository;
 import amt.rmgg.gamification.repositories.UserRepository;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +40,7 @@ public class EventsApiController implements EventsApi {
     EventProcessorService eventProcessorService;
 
     @Autowired
-    EventTypeRepository eventTypeRepository;
+    EventCounterRepository eventCounterRepository;
 
     @Autowired
     UserRepository userRepository;
@@ -84,8 +84,8 @@ public class EventsApiController implements EventsApi {
         EventEntity eventEntity = new EventEntity();
         eventEntity.setUserEntity(userRepository.findByUsername(event.getUsername())
                 .orElseThrow(() -> new InvalidObjectException("Unknown username")));
-        eventEntity.setEventTypeEntity(eventTypeRepository.findById(event.getEventTypeId())
-                .orElseThrow(() -> new InvalidObjectException("Unknown event type")));
+        eventEntity.setEventCounterEntity(eventCounterRepository.findById(event.getEventCounterId())
+                .orElseThrow(() -> new InvalidObjectException("Unknown event counter")));
         eventEntity.setTimestamp(new Date());
         return eventEntity;
     }

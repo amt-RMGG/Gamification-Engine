@@ -24,7 +24,7 @@ public class ApplicationEntity {
     private List<RuleEntity> rules;
 
     @OneToMany
-    private List<EventTypeEntity> eventTypes;
+    private List<EventCounterEntity> eventCounters;
 
     @OneToMany
     private List<UserEntity> users;

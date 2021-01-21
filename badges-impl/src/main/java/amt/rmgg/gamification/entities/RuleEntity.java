@@ -20,7 +20,7 @@ public class RuleEntity implements Serializable {
     private BadgeEntity badge;
 
     @ManyToOne
-    private EventTypeEntity eventType;
+    private EventCounterEntity eventCounter;
 
 /*    @ManyToOne
     private ApplicationEntity application;*/

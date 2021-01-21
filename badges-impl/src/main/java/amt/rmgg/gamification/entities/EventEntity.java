@@ -22,5 +22,5 @@ public class EventEntity implements Serializable {
     private UserEntity userEntity;
 
     @ManyToOne
-    private EventTypeEntity eventTypeEntity;
+    private EventCounterEntity eventCounterEntity;
 }

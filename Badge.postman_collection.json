@@ -367,7 +367,7 @@
 			"protocolProfileBehavior": {}
 		},
 		{
-			"name": "event Types",
+			"name": "event counters",
 			"item": [
 				{
 					"name": "create Event Type",
@@ -379,7 +379,7 @@
 								"exec": [
 									"var jsonResp = JSON.parse(responseBody);\r",
 									"console.log(jsonResp);\r",
-									"pm.collectionVariables.set(\"eventType-id\", jsonResp.id);\r",
+									"pm.collectionVariables.set(\"eventCounter-id\", jsonResp.id);\r",
 									"\r",
 									"pm.test(\"Status code is 201\", function () {\r",
 									"    pm.response.to.have.status(201);\r",
@@ -405,15 +405,15 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseUrl}}/eventTypes",
+							"raw": "{{baseUrl}}/eventCounters",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
-								"eventTypes"
+								"eventCounters"
 							]
 						},
-						"description": "add a new event type for the application"
+						"description": "add a new event counter for the application"
 					},
 					"response": [
 						{
@@ -435,12 +435,12 @@
 									"raw": "{\n    \"id\": \"<long>\",\n    \"name\": \"<string>\",\n    \"initialValue\": \"<integer>\"\n}"
 								},
 								"url": {
-									"raw": "{{baseUrl}}/eventTypes",
+									"raw": "{{baseUrl}}/eventCounters",
 									"host": [
 										"{{baseUrl}}"
 									],
 									"path": [
-										"eventTypes"
+										"eventCounters"
 									]
 								}
 							},
@@ -459,7 +459,7 @@
 					]
 				},
 				{
-					"name": "get Event Types",
+					"name": "get Event Counters",
 					"event": [
 						{
 							"listen": "test",
@@ -478,15 +478,15 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/eventTypes",
+							"raw": "{{baseUrl}}/eventCounters",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
-								"eventTypes"
+								"eventCounters"
 							]
 						},
-						"description": "get the list of all event types"
+						"description": "get the list of all event counters"
 					},
 					"response": [
 						{
@@ -504,12 +504,12 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseUrl}}/eventTypes",
+									"raw": "{{baseUrl}}/eventCounters",
 									"host": [
 										"{{baseUrl}}"
 									],
 									"path": [
-										"eventTypes"
+										"eventCounters"
 									]
 								}
 							},
@@ -547,16 +547,16 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/eventTypes/{{eventType-id}}",
+							"raw": "{{baseUrl}}/eventCounters/{{eventCounter-id}}",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
-								"eventTypes",
-								"{{eventType-id}}"
+								"eventCounters",
+								"{{eventCounter-id}}"
 							]
 						},
-						"description": "get one event type, by id"
+						"description": "get one event counter, by id"
 					},
 					"response": [
 						{
@@ -574,12 +574,12 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseUrl}}/eventTypes/:id",
+									"raw": "{{baseUrl}}/eventCounters/:id",
 									"host": [
 										"{{baseUrl}}"
 									],
 									"path": [
-										"eventTypes",
+										"eventCounters",
 										":id"
 									],
 									"variable": [
@@ -649,7 +649,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"eventTypeId\": {{eventType-id}},\n    \"threshold\": 50,\n    \"badgeId\": {{badge-id}}\n}",
+							"raw": "{\n    \"eventCounterId\": {{eventCounter-id}},\n    \"threshold\": 50,\n    \"badgeId\": {{badge-id}}\n}",
 							"options": {
 								"raw": {}
 							}
@@ -682,7 +682,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"id\": \"<long>\",\n    \"eventTypeId\": \"<long>\",\n    \"threshold\": \"<integer>\",\n    \"badgeId\": \"<integer>\"\n}"
+									"raw": "{\n    \"id\": \"<long>\",\n    \"eventCounterId\": \"<long>\",\n    \"threshold\": \"<integer>\",\n    \"badgeId\": \"<integer>\"\n}"
 								},
 								"url": {
 									"raw": "{{baseUrl}}/rules",
@@ -704,7 +704,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n \"id\": \"<long>\",\n \"eventTypeId\": \"<long>\",\n \"threshold\": \"<integer>\",\n \"badgeId\": \"<integer>\"\n}"
+							"body": "{\n \"id\": \"<long>\",\n \"eventCounterId\": \"<long>\",\n \"threshold\": \"<integer>\",\n \"badgeId\": \"<integer>\"\n}"
 						}
 					]
 				},
@@ -773,7 +773,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "[\n {\n  \"id\": \"<long>\",\n  \"eventTypeId\": \"<long>\",\n  \"threshold\": \"<integer>\",\n  \"badgeId\": \"<integer>\"\n },\n {\n  \"id\": \"<long>\",\n  \"eventTypeId\": \"<long>\",\n  \"threshold\": \"<integer>\",\n  \"badgeId\": \"<integer>\"\n }\n]"
+							"body": "[\n {\n  \"id\": \"<long>\",\n  \"eventCounterId\": \"<long>\",\n  \"threshold\": \"<integer>\",\n  \"badgeId\": \"<integer>\"\n },\n {\n  \"id\": \"<long>\",\n  \"eventCounterId\": \"<long>\",\n  \"threshold\": \"<integer>\",\n  \"badgeId\": \"<integer>\"\n }\n]"
 						}
 					]
 				},
@@ -849,7 +849,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n \"id\": \"<long>\",\n \"eventTypeId\": \"<long>\",\n \"threshold\": \"<integer>\",\n \"badgeId\": \"<integer>\"\n}"
+							"body": "{\n \"id\": \"<long>\",\n \"eventCounterId\": \"<long>\",\n \"threshold\": \"<integer>\",\n \"badgeId\": \"<integer>\"\n}"
 						}
 					]
 				}
@@ -868,7 +868,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"username\": \"user1\",\n    \"eventTypeId\": {{eventType-id}}\n}",
+					"raw": "{\n    \"username\": \"user1\",\n    \"eventCounterId\": {{eventCounter-id}}\n}",
 					"options": {
 						"raw": {}
 					}
@@ -901,7 +901,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"userid\": \"<integer>\",\n    \"eventTypeId\": \"<long>\"\n}"
+							"raw": "{\n    \"userid\": \"<integer>\",\n    \"eventCounterId\": \"<long>\"\n}"
 						},
 						"url": {
 							"raw": "{{baseUrl}}/events",
@@ -1022,7 +1022,7 @@
 		},
 		{
 			"id": "dc3318b7-a57b-4b36-b23b-fa1ec9198717",
-			"key": "eventType-id",
+			"key": "eventCounter-id",
 			"value": "0"
 		},
 		{
