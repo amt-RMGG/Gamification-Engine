@@ -11,7 +11,9 @@ First you need to install Newman : <br>
 `npm install -g newman` <br>
 Then run the .json collection file : <br>
 `newman run Badge.postman_collection.json` <br>
-It will create all the stuff mentionned above and run the test on the status code.
+It will create all the stuff mentionned above and run the test on the status code.<br>
+N.b : You can specify the url of the server with the command --env-var <br>
+`newman run Badge.postman_collection.json --env-var baseUrl=localhost:8090`
 # Build and run the Badge microservice
 
 ## With maven
