@@ -4,6 +4,7 @@ Feature: Basic operations on rules
     Given the server is running
     Given my application is register
 
+  @postRule
   Scenario: post a rule
     Given I have a badge payload
     When I POST the badge payload to the /badges endpoint

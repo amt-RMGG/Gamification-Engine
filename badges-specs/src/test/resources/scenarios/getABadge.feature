@@ -4,6 +4,7 @@ Feature: Create and get a badge
     Given there is a Badges server
     Given my application is register
 
+  @getOne
   Scenario: the expiration date and time are managed
     Given I have a badge payload
     When I POST the badge payload to the /badges endpoint

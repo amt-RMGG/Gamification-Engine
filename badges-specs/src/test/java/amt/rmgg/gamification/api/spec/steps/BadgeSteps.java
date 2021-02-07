@@ -53,6 +53,17 @@ public class BadgeSteps  {
         }
     }
 
+    @When("I GET a badge with non existing ID")
+    public void i_get_the_created_badge() {
+        try {
+            StepsHelper.lastApiResponse = StepsHelper.api.getBadgeWithHttpInfo(StepsHelper.lastCreatedBadgeId+1);
+            StepsHelper.processApiResponse(StepsHelper.lastApiResponse);
+            lastReceivedBadge = (Badge)StepsHelper.lastApiResponse.getData();
+        } catch (ApiException e) {
+            StepsHelper.processApiException(e);
+        }
+    }
+
     @Given("I have a badge payload")
     public void i_have_a_badge_payload() throws Throwable {
         badge = new amt.rmgg.gamification.api.dto.Badge()
