@@ -7,6 +7,7 @@ import amt.rmgg.gamification.api.dto.Badge;
 import amt.rmgg.gamification.api.dto.Event;
 import amt.rmgg.gamification.api.dto.EventType;
 import amt.rmgg.gamification.api.spec.helpers.Environment;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -15,6 +16,7 @@ import java.util.List;
 public class EventSteps {
 
     Event event;
+    Event lastRecievedEvent;
     Badge receivedBadge;
 
     @Given("I have a event payload")
@@ -52,6 +54,40 @@ public class EventSteps {
         receivedBadge = ((Badge) StepsHelper.lastApiResponse.getData());
         assert(receivedBadge != null);
         assert(receivedBadge.getId() == StepsHelper.lastCreatedBadgeId);
+    }
+
+    @And("I GET the created Events")
+    public void iGETTheCreatedEvent() {
+        try {
+            StepsHelper.lastApiResponse(StepsHelper.api.getBadgeWithHttpInfo(StepsHelper.lastCreatedEventId));
+            StepsHelper.processApiResponse(StepsHelper.lastApiResponse);
+            lastRecievedEvent = (Event) StepsHelper.lastApiResponse.getData();
+            assertEquals(lastRecievedEvent.getName(), event.getName());
+        } catch (ApiException e) {
+            StepsHelper.processApiException(e);
+        }
+    }
+
+    @And("I GET a event with non existing ID")
+    public void iGETTheCreatedEvent() {
+        try {
+            StepsHelper.lastApiResponse(StepsHelper.api.getBadgeWithHttpInfo(StepsHelper.lastCreatedEventId+1));
+            StepsHelper.processApiResponse(StepsHelper.lastApiResponse);
+            lastRecievedEvent = (Event) StepsHelper.lastApiResponse.getData();
+        } catch (ApiException e) {
+            StepsHelper.processApiException(e);
+        }
+    }
+
+    @Then("I GET an event with ID {int}")
+    public void iGETAnEventTypeWithID(int eventId) {
+        try {
+            StepsHelper.setLastApiResponse(StepsHelper.getApi().getEventWithHttpInfo(eventId));
+            StepsHelper.processApiResponse(StepsHelper.getLastApiResponse());
+            lastRecievedEvent = (Event) StepsHelper.lastApiResponse.getData();
+        } catch (ApiException e) {
+            StepsHelper.processApiException(e);
+        }
     }
 
 }

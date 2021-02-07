@@ -56,6 +56,7 @@ public class RuleSteps {
         try {
             StepsHelper.lastApiResponse = StepsHelper.api.getRuleWithHttpInfo(id);
             StepsHelper.processApiResponse(StepsHelper.lastApiResponse);
+            lastReceivedRule = (Rule) StepsHelper.lastApiResponse.getData();
         } catch (ApiException e) {
             StepsHelper.processApiException(e);
         }
@@ -65,6 +66,17 @@ public class RuleSteps {
     public void iGETTheCreatedRule() {
         try {
             StepsHelper.lastApiResponse = StepsHelper.api.getRuleWithHttpInfo(StepsHelper.lastCreatedRuleId);
+            StepsHelper.processApiResponse(StepsHelper.lastApiResponse);
+            lastReceivedRule = (Rule)StepsHelper.lastApiResponse.getData();
+        } catch (ApiException e) {
+            StepsHelper.processApiException(e);
+        }
+    }
+
+    @Then("I GET a rule with non existing ID")
+    public void iGETTheCreatedRule() {
+        try {
+            StepsHelper.lastApiResponse = StepsHelper.api.getRuleWithHttpInfo(StepsHelper.lastCreatedRuleId+1);
             StepsHelper.processApiResponse(StepsHelper.lastApiResponse);
             lastReceivedRule = (Rule)StepsHelper.lastApiResponse.getData();
         } catch (ApiException e) {

@@ -2,6 +2,7 @@ package amt.rmgg.gamification.api.spec.steps;
 
 import amt.rmgg.gamification.ApiException;
 import amt.rmgg.gamification.api.dto.EventType;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -49,13 +50,43 @@ public class EventTypeSteps {
     }
 
     @Then("I GET an eventType with ID {int}")
-    public void iGETAnEventTypeWithID(int id) {
+    public void iGETAnEventTypeWithID(int eventTypeId) {
         try {
-            StepsHelper.lastApiResponse = StepsHelper.api.getEventTypeWithHttpInfo(id);
+            StepsHelper.lastApiResponse = StepsHelper.api.getEventTypeWithHttpInfo(eventTypeId);
             StepsHelper.processApiResponse(StepsHelper.lastApiResponse);
+            lastReceivedEventType = (EventType) StepsHelper.lastApiResponse.getData();
         } catch (ApiException e) {
             StepsHelper.processApiException(e);
         }
+    }
+
+    @And("I GET the created eventTypes")
+    public void iGETTheCreatedEventTypes() {
+        try {
+            StepsHelper.lastApiResponse(StepsHelper.api.getBadgeWithHttpInfo(StepsHelper.lastCreatedEventTypeId));
+            StepsHelper.processApiResponse(StepsHelper.lastApiResponse);
+            lastReceivedEventType = (EventType) StepsHelper.lastApiResponse.getData();
+            assertEquals(lastReceivedEventType.getName(), eventType.getName());
+        } catch (ApiException e) {
+            StepsHelper.processApiException(e);
+        }
+    }
+
+    @And("I GET a eventType with non existing ID")
+    public void iGETTheCreatedEventTypes() {
+        try {
+            StepsHelper.lastApiResponse(StepsHelper.api.getBadgeWithHttpInfo(StepsHelper.lastCreatedEventTypeId+1));
+            StepsHelper.processApiResponse(StepsHelper.lastApiResponse);
+            lastReceivedEventType = (EventType) StepsHelper.lastApiResponse.getData();
+        } catch (ApiException e) {
+            StepsHelper.processApiException(e);
+        }
+    }
+
+    @And("I receive a payload that is the same as the eventType payload")
+    public void iReceiveAPayloadThatIsTheSameAsTheBadgePayload() {
+        assertEquals(eventType.getName(), lastReceivedEventType.getName());
+        assertEquals(eventType.getInitialValue(), lastReceivedEventType.getInitialValue());
     }
 
 }
