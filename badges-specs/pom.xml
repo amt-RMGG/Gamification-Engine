@@ -11,7 +11,7 @@
     <maven.compiler.target>11</maven.compiler.target>
     <junit.version>4.13.1</junit.version>
     <cucumber.version>6.8.2</cucumber.version>
-    <openapi-generator-version>4.3.1</openapi-generator-version>
+    <openapi-generator-version>5.1.0</openapi-generator-version>
     <swagger-core-version>1.6.2</swagger-core-version>
     <jersey-version>2.22.2</jersey-version>
     <jackson-version>2.7.5</jackson-version>
